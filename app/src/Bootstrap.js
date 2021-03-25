@@ -16,4 +16,4 @@ class Bootstrap{
     }
 }
 
-export class Bootstrap;
+export default Bootstrap;
