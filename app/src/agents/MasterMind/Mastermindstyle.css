@@ -1,0 +1,77 @@
+.game_title {
+  margin-top: 20px;
+}
+p {
+  margin: 10px 0;
+  padding: 5px;
+  border: 1px solid #999;
+}
+
+body {
+  background: #f4f4f4;
+  font-family: serif;
+}
+
+h1 {
+  color: #333333;
+  font-size: 1.8rem;
+  font-family: "Cinzel", serif;
+  letter-spacing: 3px;
+}
+
+h1 span {
+  color: #ffffff;
+  padding: 0 5px;
+}
+
+.M,
+.zero input + label {
+  font-size: 80px;
+  background: #ffb400;
+}
+
+.A,
+.one input + label {
+  font-size: 80px;
+  background: #ff5a5f;
+}
+
+.S,
+.two input + label {
+  font-size: 80px;
+  background-color: #8ce071;
+}
+
+.T,
+.three input + label {
+  font-size: 80px;
+  background-color: #00d1c1;
+}
+
+.E,
+.four input + label {
+  font-size: 80px;
+  background-color: #007a87;
+}
+
+.R,
+.five input + label {
+  font-size: 80px;
+  background-color: #7b0051;
+}
+
+.MIND {
+  font-size: 60px;
+  color: #2624a8;
+}
+.rules {
+  margin: 25px 0;
+}
+
+.rules-toggle {
+  font-size: 1.2rem;
+}
+
+.Button_rule {
+  font-size: 30px;
+}
