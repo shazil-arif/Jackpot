@@ -12,7 +12,7 @@ class Rules extends Component {
         <Button className="Button_rule" onClick={this.props.toggleRules}>
           {this.displayText()}
         </Button>
-        <p info={true} hidden={!this.props.rules}>
+        <p hidden={!this.props.rules}>
           <span>
             Try to guess the pattern with correct colors and order of the key
             pegs within limited number of turns. After submitting your guess, a

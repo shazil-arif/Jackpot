@@ -25,37 +25,37 @@ h1 span {
 }
 
 .M,
-.zero input + label {
+.zero input[type="radio"] + label {
   font-size: 80px;
   background: #ffb400;
 }
 
 .A,
-.one input + label {
+.one input[type="radio"] + label {
   font-size: 80px;
   background: #ff5a5f;
 }
 
 .S,
-.two input + label {
+.two input[type="radio"] + label {
   font-size: 80px;
   background-color: #8ce071;
 }
 
 .T,
-.three input + label {
+.three input[type="radio"] + label {
   font-size: 80px;
   background-color: #00d1c1;
 }
 
 .E,
-.four input + label {
+.four input[type="radio"] + label {
   font-size: 80px;
   background-color: #007a87;
 }
 
 .R,
-.five input + label {
+.five input[type="radio"] + label {
   font-size: 80px;
   background-color: #7b0051;
 }
@@ -74,4 +74,33 @@ h1 span {
 
 .Button_rule {
   font-size: 30px;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+.peg input[type="radio"] + label {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  margin: -1px 4px 0 0;
+  vertical-align: middle;
+  cursor: pointer;
+  border: #eaebe9 2px solid;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.selected input[type="radio"] + label {
+  border-color: #525554;
+}
+
+.codepegs {
+  width: 50px;
+  margin-top: 10px;
+}
+
+.codepegs .peg input[type="radio"] + label {
+  margin-top: 0;
 }
