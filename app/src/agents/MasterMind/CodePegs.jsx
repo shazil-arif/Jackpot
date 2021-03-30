@@ -2,10 +2,7 @@ import React, { Component } from "react";
 import "./Mastermindstyle.css";
 import Peg from "./Peg";
 class CodePegs extends Component {
-  test() {
-    console.log("clicked");
-  }
-  generatechoice() {
+  render() {
     const pegs = [];
     let id;
     let pegClass;
@@ -19,18 +16,17 @@ class CodePegs extends Component {
       pegs.push(
         <Peg
           idVal={id}
-          value={value}
+          name="peg"
           key={id}
+          value={value}
           pegClass={pegClass}
           isCurrentRow={true}
           active={this.props.active}
+          start={this.props.start}
         />
       );
     }
-    return pegs;
-  }
-  render() {
-    return <div className="codepegs right">{this.generatechoice()}</div>;
+    return <div className="codepegs right">{pegs}</div>;
   }
 }
 

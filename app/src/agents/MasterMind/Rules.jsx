@@ -2,11 +2,18 @@ import React, { Component } from "react";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Mastermindstyle.css";
+import classNames from "classnames";
 class Rules extends Component {
   displayText() {
     return !this.props.rules ? "Show rules" : "Hide rules";
   }
   render() {
+    const className = classNames({
+      info: true,
+      hidden: !this.props.rules,
+    });
+    const infoText = !this.props.rules ? "Show rules" : "Hide rules";
+
     return (
       <div>
         <Button className="Button_rule" onClick={this.props.toggleRules}>
