@@ -29,7 +29,7 @@ class DecodingBoard extends Component {
 
     times(this.props.state.attempts)(generateRow);
 
-    return <div className="decoding-board left">{rows}</div>;
+    return <div className="left">{rows}</div>;
   }
 }
 
