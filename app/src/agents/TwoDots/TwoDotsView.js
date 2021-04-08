@@ -2,25 +2,6 @@ import React, { Component } from "react";
 let cnt = 0;
 
 
-function relMouseCoords(x, y){
-    var totalOffsetX = 0;
-    var totalOffsetY = 0;
-    var canvasX = 0;
-    var canvasY = 0;
-    var currentElement = this;
-
-    do{
-        totalOffsetX += currentElement.offsetLeft - currentElement.scrollLeft;
-        totalOffsetY += currentElement.offsetTop - currentElement.scrollTop;
-    }
-    while(currentElement = currentElement.offsetParent)
-
-    canvasX = x - totalOffsetX;
-    canvasY = y - totalOffsetY;
-
-    return {x:canvasX, y:canvasY}
-}
-HTMLCanvasElement.prototype.relMouseCoords = relMouseCoords;
 
 class TwoDotsView extends Component {
 	constructor(props) {
