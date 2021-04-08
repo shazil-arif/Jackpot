@@ -8,7 +8,7 @@ class TwoDotsModel{
     }
 
     set(p, value){
-        this.board[p.getX(), p.getY()] = value;
+        this.board[p.getX(), p.getY()] = value; // value should be hex color ?
     }
 
     get(p){
