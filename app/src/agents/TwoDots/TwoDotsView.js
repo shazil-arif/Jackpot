@@ -118,17 +118,7 @@ class TwoDotsView extends Component {
 
 
 	render() {
-		return (
-			<div>
-				<h1>TwoDots</h1>
-				<canvas id="dots" ref={this.canvasRef} style={{
-					top: 0,
-					left: 0,
-					width: '50%',
-					height: '50%',
-				}}/>
-			</div>
-		);
+		
 	}
 }
 
