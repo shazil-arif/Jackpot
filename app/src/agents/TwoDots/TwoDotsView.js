@@ -1,13 +1,63 @@
 import React, { Component } from "react";
+let cnt = 0;
+
+
+function relMouseCoords(x, y){
+    var totalOffsetX = 0;
+    var totalOffsetY = 0;
+    var canvasX = 0;
+    var canvasY = 0;
+    var currentElement = this;
+
+    do{
+        totalOffsetX += currentElement.offsetLeft - currentElement.scrollLeft;
+        totalOffsetY += currentElement.offsetTop - currentElement.scrollTop;
+    }
+    while(currentElement = currentElement.offsetParent)
+
+    canvasX = x - totalOffsetX;
+    canvasY = y - totalOffsetY;
+
+    return {x:canvasX, y:canvasY}
+}
+HTMLCanvasElement.prototype.relMouseCoords = relMouseCoords;
 
 class TwoDotsView extends Component {
 	constructor(props) {
 		super(props)
-	
+		
+		this.points = [];
 		this.canvasRef = React.createRef();
 	}
+
+	isCursorWithinCircle(mouseX, mouseY) {
 	
-	componentDidMount(){			
+		let newCoords = this.canvasRef.current.relMouseCoords(mouseX, mouseY);
+		let newX = newCoords.x;
+		let newY = newCoords.y;
+
+		mouseX = newX;
+		mouseY = newY;
+
+		
+
+		for(const point of this.points){
+			let x = point[0];
+			let y = point[1];
+			let r = point[2]; // use point class for this
+
+		
+			let sqrt = (x - mouseX) * (x - mouseX) + (y - mouseY) * (y - mouseY)
+			let distSqr = Math.sqrt(sqrt);
+
+			if(distSqr <= r) return true;
+		}
+		return false;
+	}
+	
+	componentDidMount(){	
+		
+
 		const dotMargin = 20;
 		const numRows = 6;
 		const numCols = 6;
@@ -21,31 +71,61 @@ class TwoDotsView extends Component {
 		canvas.setAttribute("height", canvasHeight);		
 		canvas.setAttribute("width", canvasWidth);
 
-		var dotWidth = ((canvasWidth - (2 * dotMargin)) / numCols) - dotMargin;
-		var dotHeight = ((canvasHeight - (2 * dotMargin)) / numRows) - dotMargin;
-		
+		let dotWidth = ((canvasWidth - (2 * dotMargin)) / numCols) - dotMargin;
+		let dotHeight = ((canvasHeight - (2 * dotMargin)) / numRows) - dotMargin;
+		let dotDiameter;
+		let xMargin;
+		let yMargin;
+
 		if( dotWidth > dotHeight ) {
-			var dotDiameter = dotHeight;
-			var xMargin = (canvasWidth - ((2 * dotMargin) + (numCols * dotDiameter))) / numCols;
-			var yMargin = dotMargin;
-		} else {
-			var dotDiameter = dotWidth;
-			var xMargin = dotMargin;
-			var yMargin = (canvasHeight - ((2 * dotMargin) + (numRows * dotDiameter))) / numRows;
+			dotDiameter = dotHeight;
+			xMargin = (canvasWidth - ((2 * dotMargin) + (numCols * dotDiameter))) / numCols;
+			yMargin = dotMargin;
+		} else{
+			dotDiameter = dotWidth;
+			xMargin = dotMargin;
+			yMargin = (canvasHeight - ((2 * dotMargin) + (numRows * dotDiameter))) / numRows;
 		}
 		
-		console.log(dotDiameter)
 		const dotRadius = dotDiameter * 0.5;
-		
-		for(var i = 0; i < numRows; i++) {
-			for(var j = 0; j < numCols; j++) {
-			const x = (j * (dotDiameter + xMargin)) + dotMargin + (xMargin / 2) + dotRadius;
-			const y = (i * (dotDiameter + yMargin)) + dotMargin + (yMargin / 2) + dotRadius;
-			// Grab a random color from the array.
-			const color = colors[Math.floor(Math.random() * colors.length)];
-			drawDot(x, y, dotRadius, color);
+		for(let i = 0; i < numRows; i++) {
+			for(let j = 0; j < numCols; j++) {
+				const x = (j * (dotDiameter + xMargin)) + dotMargin + (xMargin / 2) + dotRadius;
+				const y = (i * (dotDiameter + yMargin)) + dotMargin + (yMargin / 2) + dotRadius;
+				// Grab a random color from the array.
+				const color = colors[Math.floor(Math.random() * colors.length)];
+				this.points.push([x,y, dotRadius]);
+				console.log(x,y,dotRadius)
+				drawDot(x, y, dotRadius, color);
+				
 			}
+			
 		}
+
+		
+		document.addEventListener("click", (ev) => {
+			if(this.isCursorWithinCircle(ev.x, ev.y)) {
+				drawDot(this.points[0][0], this.points[0][1], dotRadius/10, 'black');
+
+				if(cnt == 0){
+					context.beginPath();
+					// context.moveTo(20, 20);
+					context.lineTo(this.points[0][0], this.points[0][1]);
+					context.lineTo(this.points[1][0], this.points[1][1]);
+					context.stroke();
+					cnt++
+				}
+				else{
+					context.beginPath();
+					// context.moveTo(20, 20);
+					context.lineTo(this.points[1][0], this.points[1][1]);
+					context.lineTo(this.points[7][0], this.points[7][1]);
+					context.stroke();
+					cnt++
+				}
+				
+			}
+		})
 		
 		function drawDot(x, y, radius, color) {
 			context.beginPath();
@@ -55,11 +135,12 @@ class TwoDotsView extends Component {
 		}
 	}
 
+
 	render() {
 		return (
 			<div>
-				<h1>This is twodots.</h1>
-				<canvas ref={this.canvasRef} style={{
+				<h1>TwoDots</h1>
+				<canvas id="dots" ref={this.canvasRef} style={{
 					top: 0,
 					left: 0,
 					width: '50%',
