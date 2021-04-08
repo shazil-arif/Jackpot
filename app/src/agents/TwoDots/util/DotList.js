@@ -12,10 +12,11 @@ DotList.prototype.add = function(point) {
  */
 DotList.prototype[Symbol.iterator] = function(){
     let i = 0;
+    let dotList = this.dotList;
     return {
         next: function(){
-            if (i === this.dotList.length) return {done: true, value: undefined}
-            return {done: false, value: this.dotlist[i++] };
+            if (i === dotList.length) return {done: true, value: undefined}
+            return {done: false, value: dotList[i++] };
         }
     }
 }

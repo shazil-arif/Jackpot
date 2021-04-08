@@ -8,6 +8,10 @@ class Dot {
         return this.radius;
     }
 
+    getPoint(){
+        return this.point;
+    }
+
     isPointWithinDot(point) {
 	
         // let 
@@ -18,6 +22,12 @@ class Dot {
 		// mouseX = newX;
 		// mouseY = newY;
 
+        let x = this.point.getX();
+        let y = this.point.getY();
+
+        let mouseX = point.getX();
+        let mouseY = point.getY();
+    
 		
         let sqrtArgument = (x - mouseX) * (x - mouseX) + (y - mouseY) * (y - mouseY);
         let squareRootOfDistance = Math.sqrt(sqrtArgument);
@@ -27,3 +37,4 @@ class Dot {
 		return false;
 	}
 }
+export default Dot;

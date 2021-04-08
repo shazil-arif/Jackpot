@@ -22,7 +22,7 @@ class TwoDotsBoard extends React.Component{
         let totalOffsetY = 0;
         let canvasX = 0;
         let canvasY = 0;
-        let currentElement = this.canvasRef.current;
+        let currentElement = this.canvasRef.current.getContext("2d");
     
         do{
             totalOffsetX += currentElement.offsetLeft - currentElement.scrollLeft;
@@ -51,6 +51,8 @@ class TwoDotsBoard extends React.Component{
     }
 
     componentDidMount(){
+        this.drawBoardVisualFromTwoDotsModel(this.props.twoDotsModel);
+
         document.addEventListener("click", (ev) => {
             let pointClickedOnBoard = this.getMouseClickCoordinatesOnBoard(ev.x, ev.y);
             for (const dot of this.drawnDotsList){
@@ -59,8 +61,7 @@ class TwoDotsBoard extends React.Component{
                         this.setState({ wasFirstDotSelected: true, lastDotSelected: dot});
                     }
                     else{
-                        lastDotSelected = this.state.lastDotSelected;
-                        this.drawSegment(lastDotSelected, dot);
+                        this.drawSegment(this.state.lastDotSelected, dot);
                     }
                 }
             }
@@ -88,6 +89,7 @@ class TwoDotsBoard extends React.Component{
      * @param {TwoDotsModel} twoDotsModel pass actual board
      */
     drawBoardVisualFromTwoDotsModel(twoDotsModel){
+        console.log(twoDotsModel);
         const dotMargin = 20;
 		const numRows = twoDotsModel.getNumRow();
 		const numCols = twoDotsModel.getNumCol();
@@ -125,15 +127,15 @@ class TwoDotsBoard extends React.Component{
 				const x = (j * (dotDiameter + xMargin)) + dotMargin + (xMargin / 2) + dotRadius;
 				const y = (i * (dotDiameter + yMargin)) + dotMargin + (yMargin / 2) + dotRadius;
 				// Grab a random color from the array.
-				const color = colors[Math.floor(Math.random() * colors.length)];
+				// const color = colors[Math.floor(Math.random() * colors.length)];
 
                 let pointToDrawAt = new Point(x,y);
                 let dotToDraw = new Dot(pointToDrawAt, dotRadius);
 
-                this.drawnDotsList.add(pointToDrawAt);
+                this.drawnDotsList.add(dotToDraw);
 
                 const color = twoDotsModel.get(pointToDrawAt);
-				drawDot(dotToDraw, color);
+				this.drawDot(dotToDraw, color);
 				
 			}
 			
