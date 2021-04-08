@@ -1,8 +1,8 @@
 class TwoDotsModel{
     constructor(){
-        this.n =6;
+        this.n = 6;
         this.board = [];
-        for(let i = 0; i < this.board.length; i++){
+        for(let i = 0; i < this.n; i++){
             this.board.push([]);
         }
     }
