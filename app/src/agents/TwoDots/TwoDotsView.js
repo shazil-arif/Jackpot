@@ -11,12 +11,12 @@ class TwoDotsView extends Component {
 	
 	}
 	
+
 	render() {
 		return (
 			<div>
 				<h1>Two Dots</h1>
-				<TwoDotsBoard twoDotsModel = {this.twoDotsModel} ></TwoDotsBoard>
-				<Button variant="danger">Eliminate selected dots</Button>
+				<TwoDotsBoard twoDotsModel = {this.twoDotsModel} updateClick ></TwoDotsBoard>
 				<div></div>
 				<Button style={{marginTop: '1%'}} variant="danger">Clear Current Selection</Button>
 			</div>

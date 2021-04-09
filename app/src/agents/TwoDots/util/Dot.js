@@ -13,14 +13,6 @@ class Dot {
     }
 
     isPointWithinDot(point) {
-	
-        // let 
-		// let newCoords = this.canvasRef.current.relMouseCoords(mouseX, mouseY);
-		// let newX = newCoords.x;
-		// let newY = newCoords.y;
-
-		// mouseX = newX;
-		// mouseY = newY;
 
         let x = this.point.getX();
         let y = this.point.getY();

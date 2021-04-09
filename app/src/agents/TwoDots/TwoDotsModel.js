@@ -25,12 +25,13 @@ class TwoDotsModel{
                 this.setRandom(new Point(i,j));
             }
         }
-        if(!this._isPlayable()) this._intializeRandomBoard();
+        // if(!this._isPlayable()) this._intializeRandomBoard();
     }
 
     setRandom(p){
         const color = this.colors[Math.floor(Math.random() * this.colors.length)];
         this.set(p, color);
+        if(!this._isPlayable()) this.setRandom(p);
     }
 
     set(p, value){
@@ -119,7 +120,6 @@ class TwoDotsModel{
             for(let k = 0; k < x.length; k++){
                 let temp = new Point(current.getX() + x[k], current.getY() + y[k]);
                 if(this.isValidPoint(temp)){
-                    console.log(temp);
                     let neighbourColor = this.board[temp.getX()][temp.getY()];
 
                     if (next.getX() === temp.getX() && next.getY() === temp.getY()){

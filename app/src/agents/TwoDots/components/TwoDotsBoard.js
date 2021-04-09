@@ -3,13 +3,14 @@ import React from 'react';
 import Point from '../util/Point';
 import Dot from '../util/Dot';
 import BoardMoves from '../util/DotList';
+import { Button } from 'react-bootstrap';
+
 
 class TwoDotsBoard extends React.Component{
 
     constructor(props) {
         super(props)
     
-        
         this.wasFirstDotSelected =  false;
         this.lastDotSelected = null;
         this.path = new BoardMoves();
@@ -17,6 +18,24 @@ class TwoDotsBoard extends React.Component{
         this.getBoardCoordinatesFromCanvasCoordinates = {};
         this.drawnDotsList = new BoardMoves();
         this.canvasRef = React.createRef();
+
+        this.updateBoard = this.updateBoard.bind(this);
+    }
+
+    updateBoard(){
+        this.props.twoDotsModel.updateBoard(this.path);
+       
+        // is there a better way to do this?
+        // reset everything and call componen t did mount. use setState?
+        this.wasFirstDotSelected =  false;
+        this.lastDotSelected = null;
+        this.path = new BoardMoves();
+
+        this.getBoardCoordinatesFromCanvasCoordinates = {};
+        this.drawnDotsList = new BoardMoves();
+
+        this.componentDidMount();
+
     }
 
     getMouseClickCoordinatesOnBoard(x, y){
@@ -53,6 +72,7 @@ class TwoDotsBoard extends React.Component{
     }
 
     componentDidMount(){
+        console.log('didmount')
         this.drawBoardVisualFromTwoDotsModel(this.props.twoDotsModel);
 
         document.addEventListener("click", (ev) => {
@@ -65,7 +85,6 @@ class TwoDotsBoard extends React.Component{
                         this.lastDotSelected = dot;   
 
                         let point = this.getBoardCoordinatesFromCanvasCoordinates[dot.getPoint().getX()][dot.getPoint().getY()];
-                        console.log(this.getBoardCoordinatesFromCanvasCoordinates, dot.getPoint());
                         this.path.add(point);
                     }
 
@@ -73,7 +92,6 @@ class TwoDotsBoard extends React.Component{
                         let point = this.getBoardCoordinatesFromCanvasCoordinates[dot.getPoint().getX()][dot.getPoint().getY()];
 
                         this.path.add(point);
-                        console.log(point);
                         if(this.props.twoDotsModel.validateMoves(this.path)){
                             this.drawSegment(this.lastDotSelected.getPoint(), dot.getPoint());
                             this.lastDotSelected = dot;
@@ -111,7 +129,6 @@ class TwoDotsBoard extends React.Component{
      * @param {TwoDotsModel} twoDotsModel pass actual board
      */
     drawBoardVisualFromTwoDotsModel(twoDotsModel){
-        // console.log(twoDotsModel);
         const dotMargin = 20;
 		const numRows = twoDotsModel.getNumRow();
 		const numCols = twoDotsModel.getNumCol();
@@ -190,6 +207,9 @@ class TwoDotsBoard extends React.Component{
 					height: '50%',
                     border: '1px solid black'
 				}}/>
+                <div></div>
+                <Button variant="danger" onClick = {this.updateBoard}>Eliminate selected dots</Button>
+
 			</div>
         )
     }
