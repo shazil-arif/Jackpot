@@ -9,10 +9,12 @@ class TwoDotsBoard extends React.Component{
     constructor(props) {
         super(props)
     
-        this.state = {
-            wasFirstDotSelected: false,
-            lastDotSelected: null,
-        };
+        
+        this.wasFirstDotSelected =  false;
+        this.lastDotSelected = null;
+        
+
+        this.canvasBoardToActualBoard = {};
         this.drawnDotsList = new BoardMoves();
         this.canvasRef = React.createRef();
     }
@@ -22,7 +24,7 @@ class TwoDotsBoard extends React.Component{
         let totalOffsetY = 0;
         let canvasX = 0;
         let canvasY = 0;
-        let currentElement = this.canvasRef.current.getContext("2d");
+        let currentElement = this.canvasRef.current;
     
         do{
             totalOffsetX += currentElement.offsetLeft - currentElement.scrollLeft;
@@ -57,11 +59,16 @@ class TwoDotsBoard extends React.Component{
             let pointClickedOnBoard = this.getMouseClickCoordinatesOnBoard(ev.x, ev.y);
             for (const dot of this.drawnDotsList){
                 if (dot.isPointWithinDot(pointClickedOnBoard)){
-                    if(!this.state.wasFirstDotSelected) {
-                        this.setState({ wasFirstDotSelected: true, lastDotSelected: dot});
+
+                    if(!this.wasFirstDotSelected){
+                        this.wasFirstDotSelected = true;
+                        this.lastDotSelected = dot;   
                     }
-                    else{
-                        this.drawSegment(this.state.lastDotSelected, dot);
+
+                    else  {
+                        this.drawSegment(this.lastDotSelected.getPoint(), dot.getPoint());
+                        // this.setState({ wasFirstDotSelected: true, lastDotSelected: dot});
+                        this.lastDotSelected = dot;
                     }
                 }
             }
@@ -76,6 +83,9 @@ class TwoDotsBoard extends React.Component{
      */
     drawSegment(startingPoint, endingPoint){
         let context = this.canvasRef.current.getContext("2d");
+        context.lineWidth = 5;
+        context.strokeStyle = '#ff0000';
+        context.lineCap = 'round';
         context.beginPath();
 		// context.moveTo(20, 20);
 		context.lineTo(startingPoint.getX(), startingPoint.getY());
@@ -89,7 +99,7 @@ class TwoDotsBoard extends React.Component{
      * @param {TwoDotsModel} twoDotsModel pass actual board
      */
     drawBoardVisualFromTwoDotsModel(twoDotsModel){
-        console.log(twoDotsModel);
+        // console.log(twoDotsModel);
         const dotMargin = 20;
 		const numRows = twoDotsModel.getNumRow();
 		const numCols = twoDotsModel.getNumCol();
@@ -129,12 +139,14 @@ class TwoDotsBoard extends React.Component{
 				// Grab a random color from the array.
 				// const color = colors[Math.floor(Math.random() * colors.length)];
 
+                // Note that the 2d array board points are different than the actual displayed board points, which are the canvas coordinates
                 let pointToDrawAt = new Point(x,y);
+                let pointOnTwoDotsBoard = new Point(i,j);
                 let dotToDraw = new Dot(pointToDrawAt, dotRadius);
 
                 this.drawnDotsList.add(dotToDraw);
 
-                const color = twoDotsModel.get(pointToDrawAt);
+                const color = twoDotsModel.get(pointOnTwoDotsBoard);
 				this.drawDot(dotToDraw, color);
 				
 			}
@@ -151,6 +163,7 @@ class TwoDotsBoard extends React.Component{
 					left: 0,
 					width: '50%',
 					height: '50%',
+                    border: '1px solid black'
 				}}/>
 			</div>
         )

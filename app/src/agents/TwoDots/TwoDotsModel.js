@@ -3,12 +3,19 @@ import Point from "./util/Point";
 class TwoDotsModel{
     constructor(){
         this.n = 6;
-        this.board = [];
+        this.board = [
+            [0,0,0,0,0,0],
+            [0,0,0,0,0,0],
+            [0,0,0,0,0,0],
+            [0,0,0,0,0,0],
+            [0,0,0,0,0,0],
+            [0,0,0,0,0,0],
+        ]
         this.colors = ['#F03C69', '#FFCD32', '#2BAD5D', '#2ABABF', '#CDDC28', '#B91E8C'];
-        for(let i = 0; i < this.n; i++){
-            this.board.push([]);
-        }
+      
+        
         this._intializeRandomBoard();
+        console.log(this.board);
     }
 
     _intializeRandomBoard(){
@@ -16,19 +23,24 @@ class TwoDotsModel{
 
         for(let i = 0; i < this.n; i++){
             for(let j = 0; j < this.n; j++){
-                this.board[i][j] = 0;
                 this.setRandom(new Point(i,j));
             }
         }
-        // if(!this._isPlayable()) this.intializeRandomBoard();
+        if(!this._isPlayable()) this._intializeRandomBoard();
+    }
+
+    setRandom(p){
+        const color = this.colors[Math.floor(Math.random() * this.colors.length)];
+        this.set(p, color);
     }
 
     set(p, value){
-        this.board[p.getX(), p.getY()] = value; // value should be hex color ?
+        this.board[p.getX()][p.getY()] = value; // value should be hex color ?
     }
 
     get(p){
-        return this.board[p.getX(), p.getY()];
+        console.log(p)
+        return this.board[p.getX()][p.getY()];
     }
 
     getNumRow(){
@@ -48,16 +60,11 @@ class TwoDotsModel{
     }
 
     _isPlayable(){
-
+        return true;
     }
 
     isValidPath(){
 
-    }
-
-    setRandom(p){
-        const color = this.colors[Math.floor(Math.random() * this.colors.length)];
-        this.set(p, color);
     }
 }
 export default TwoDotsModel;
