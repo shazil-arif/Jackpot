@@ -63,15 +63,80 @@ class TwoDotsModel{
     }
 
     updateBoard(moves){
+        for (const move of moves){
+            let row = move.getX();
+			let col = move.getY();
+			for(let i = row; i >= 1; i--) {
+				//exchange board[row][col] with board[row-1][col]
+				let temp = this.board[i-1][col];
+				this.set(move, temp);
+				row--;
+			}
+			this.setRandom(move);
+        }
 
     }
 
     _isPlayable(){
-        return true;
+        let x = [-1,1,0,0];
+		let y = [0,0,1,-1];
+		
+		//iterate over entire board
+		for(let i = 0; i < this.n; i++) {
+			for(let j = 0; j < this.n; j++) {
+				for(let k = 0; k < x.length; k++) {
+					//check if neighbor has the same color
+					let neighbor = new Point(i+x[k],j+y[k]);
+					if(validPoint(neighbor)) {
+						let neighbor_color = this.board[neigbour.getX()][neighbour.getY()] //color of neighboring cell
+						let current_color = this.board[i][j];
+						if(neighbor_color == current_color) return true;
+					}
+				}
+			}
+		}
+		//no neighbor with same color
+		return false;
     }
 
-    isValidPath(path){
+    isValidPath(moves){
+        // path = [(1,1), (2,1), (3,1)] can we reach 2,1 from 1,1 moving only horizontall or vertically and are they same colrs?
+        let x = [1, -1, 0, 0];
+        let y = [0, 0, -1, 1]
+        let visited = [
+            [0,0,0,0,0,0],
+            [0,0,0,0,0,0],
+            [0,0,0,0,0,0],
+            [0,0,0,0,0,0],
+            [0,0,0,0,0,0],
+            [0,0,0,0,0,0],
+        ];
 
+        path = moves.getList();
+
+        for(let i = 0; i < path.length - 1; i++){
+            let current = path[i];
+            let next = path[i + 1];
+            let currentColor = this.board[current.getX()][current.getY()];
+
+            for(let k = 0; k < x.length; k++){
+                let temp = new Point(current.getX() + x[k], current.getY() + y[k]);
+                if(this.isValidPoint(nextPoint)){
+                    let neighbourColor = this.board[temp.getX()][temp.getY()];
+
+                    if (next.getX() == temp.getX() && next.getY() == temp.getY()){
+                        if (visited[next.getX()][next.getY()]) return false;
+                        else{
+                            visited[next.getX()][next.getY()] = true;
+                            if(currentColor !== neighbourColor) return false;
+                        }
+                    }
+                }
+            }
+            if(!visited[next.getX()][next.getY()]) return false;
+        }
+
+        return true;
     }
 
     isValidPoint(point){

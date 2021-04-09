@@ -10,6 +10,11 @@ DotList.prototype.removeLast = function(){
     this.dotList.pop();
 }
 
+// for more iteration options using a regular loop with counter etc.
+DotList.prototype.getList = function(){
+    return this.dotList;
+}
+
 /**
  * @description support iteration for the list of points
  * @returns {Iterator}
