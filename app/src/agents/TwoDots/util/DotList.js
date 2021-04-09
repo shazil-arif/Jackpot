@@ -6,6 +6,10 @@ DotList.prototype.add = function(point) {
     this.dotList.push(point);
 }
 
+DotList.prototype.removeLast = function(){
+    this.dotList.pop();
+}
+
 /**
  * @description support iteration for the list of points
  * @returns {Iterator}

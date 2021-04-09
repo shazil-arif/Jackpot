@@ -52,6 +52,13 @@ class TwoDotsModel{
     }
 
     validateMoves(moves){
+        if (moves.length <= 1) return false;
+
+        for (const move of moves){
+            if(!this.isValidPoint(move)) return false;
+        }
+
+        return this.isValidPath(moves);
 
     }
 
@@ -63,8 +70,14 @@ class TwoDotsModel{
         return true;
     }
 
-    isValidPath(){
+    isValidPath(path){
 
+    }
+
+    isValidPoint(point){
+        let x = point.getX();
+        let y = point.getY();
+        return x >= 0 && x < this.n && y >= 0 && y < this.n;
     }
 }
 export default TwoDotsModel;
