@@ -15,6 +15,8 @@ DotList.prototype.getList = function(){
     return this.dotList;
 }
 
+DotList.prototype.size = function () { return this.dotList.length; }
+
 /**
  * @description support iteration for the list of points
  * @returns {Iterator}

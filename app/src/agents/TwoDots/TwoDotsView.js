@@ -10,10 +10,7 @@ class TwoDotsView extends Component {
 		this.twoDotsModel = new TwoDotsModel();
 	
 	}
-	// componentDidMount(){	
-		
-	// }
-
+	
 	render() {
 		return (
 			<div>

@@ -63,30 +63,29 @@ class TwoDotsBoard extends React.Component{
                     if(!this.wasFirstDotSelected){
                         this.wasFirstDotSelected = true;
                         this.lastDotSelected = dot;   
-                        this.BoardMoves.add(dot);
+
+                        let point = this.getBoardCoordinatesFromCanvasCoordinates[dot.getPoint().getX()][dot.getPoint().getY()];
+                        console.log(this.getBoardCoordinatesFromCanvasCoordinates, dot.getPoint());
+                        this.path.add(point);
                     }
 
                     else  {
-                        let lastPointSelected = this.lastDotSelected.getPoint();
-
-                        let point = this.getBoardCoordinatesFromCanvasCoordinates[lastPointSelected.getX()][lastPointSelected.getY()];
+                        let point = this.getBoardCoordinatesFromCanvasCoordinates[dot.getPoint().getX()][dot.getPoint().getY()];
 
                         this.path.add(point);
-                        
-                        if(this.props.twoDotsModel.validateMoves(boardMoves)){
-
+                        console.log(point);
+                        if(this.props.twoDotsModel.validateMoves(this.path)){
                             this.drawSegment(this.lastDotSelected.getPoint(), dot.getPoint());
                             this.lastDotSelected = dot;
                         }
-                        else{
+                        else {
                             this.path.removeLast();
-                            // notifyUser(); // todo
                         }
                     }
                 }
             }
 
-		})
+		});
         
     }
 
@@ -161,10 +160,18 @@ class TwoDotsBoard extends React.Component{
 
                 const color = twoDotsModel.get(pointOnTwoDotsBoard);
 
-                // map canvas coordinaates to board coordinates
+                // map center of each circle on canvas's coordinaates to board coordinates
 
+                if(!this.getBoardCoordinatesFromCanvasCoordinates[x]) this.getBoardCoordinatesFromCanvasCoordinates[x] = { };
                 this.getBoardCoordinatesFromCanvasCoordinates[x][y] = pointOnTwoDotsBoard;
 
+    
+                /**
+                 * x : {
+                 *  y: new Point()
+                 * }
+                 * 
+                 */
 				this.drawDot(dotToDraw, color);
 				
 			}

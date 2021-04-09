@@ -15,7 +15,6 @@ class TwoDotsModel{
       
         
         this._intializeRandomBoard();
-        console.log(this.board);
     }
 
     _intializeRandomBoard(){
@@ -39,7 +38,6 @@ class TwoDotsModel{
     }
 
     get(p){
-        console.log(p)
         return this.board[p.getX()][p.getY()];
     }
 
@@ -52,8 +50,7 @@ class TwoDotsModel{
     }
 
     validateMoves(moves){
-        if (moves.length <= 1) return false;
-
+        if (moves.size() <= 1) return false;
         for (const move of moves){
             if(!this.isValidPoint(move)) return false;
         }
@@ -86,11 +83,11 @@ class TwoDotsModel{
 			for(let j = 0; j < this.n; j++) {
 				for(let k = 0; k < x.length; k++) {
 					//check if neighbor has the same color
-					let neighbor = new Point(i+x[k],j+y[k]);
-					if(validPoint(neighbor)) {
-						let neighbor_color = this.board[neigbour.getX()][neighbour.getY()] //color of neighboring cell
+					let neighbour = new Point(i+x[k],j+y[k]);
+					if(this.isValidPoint(neighbour)) {
+						let neighbor_color = this.board[neighbour.getX()][neighbour.getY()] //color of neighboring cell
 						let current_color = this.board[i][j];
-						if(neighbor_color == current_color) return true;
+						if(neighbor_color === current_color) return true;
 					}
 				}
 			}
@@ -112,7 +109,7 @@ class TwoDotsModel{
             [0,0,0,0,0,0],
         ];
 
-        path = moves.getList();
+        let path = moves.getList();
 
         for(let i = 0; i < path.length - 1; i++){
             let current = path[i];
@@ -121,15 +118,16 @@ class TwoDotsModel{
 
             for(let k = 0; k < x.length; k++){
                 let temp = new Point(current.getX() + x[k], current.getY() + y[k]);
-                if(this.isValidPoint(nextPoint)){
+                if(this.isValidPoint(temp)){
+                    console.log(temp);
                     let neighbourColor = this.board[temp.getX()][temp.getY()];
 
-                    if (next.getX() == temp.getX() && next.getY() == temp.getY()){
+                    if (next.getX() === temp.getX() && next.getY() === temp.getY()){
                         if (visited[next.getX()][next.getY()]) return false;
-                        else{
-                            visited[next.getX()][next.getY()] = true;
-                            if(currentColor !== neighbourColor) return false;
-                        }
+                        
+                        visited[next.getX()][next.getY()] = true;
+                        if(currentColor !== neighbourColor) return false;
+                        
                     }
                 }
             }
