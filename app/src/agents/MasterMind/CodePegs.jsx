@@ -26,7 +26,12 @@ class CodePegs extends Component {
         />
       );
     }
-    return <div className="codepegs right">{pegs}</div>;
+    return (
+      <div>
+        <div>Select the code peg and click the game board for each choice</div>
+        <div className="codepegs right">{pegs}</div>
+      </div>
+    );
   }
 }
 

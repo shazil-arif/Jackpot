@@ -70,10 +70,18 @@ footer {
   padding: 10px;
 }
 
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
 .row {
   padding: 10px 0 10px 10px;
-  width: 260px;
-  border: #f4f4f4 1px solid;
+  width: 100px;
+  border: #a82a2a 10px solid;
 }
 
 .decode-row {
@@ -81,7 +89,7 @@ footer {
 }
 
 .current.row {
-  border: #a8a8a8 1px solid;
+  border: #c51f3a 7px dashed;
 }
 
 .current .decode-row {
@@ -90,18 +98,6 @@ footer {
 
 input[type="radio"] {
   display: none;
-}
-
-.peg input[type="radio"] + label {
-  display: inline-block;
-  width: 50px;
-  height: 50px;
-  margin: -1px 4px 0 0;
-  vertical-align: middle;
-  cursor: pointer;
-  border: #eaebe9 2px solid;
-  border-radius: 50%;
-  box-sizing: border-box;
 }
 
 .selected input[type="radio"] + label {
@@ -140,9 +136,9 @@ input[type="radio"] {
 
 .submit {
   width: 20px;
-  height: 5px;
+  height: 10px;
   position: relative;
-  margin: 15px 7px;
+  margin: 15px 15px;
   border: none;
   cursor: pointer;
   background-color: #f4f4f4;
@@ -170,14 +166,14 @@ input[type="radio"] {
 
 .hints-row {
   width: 44px;
-  margin-top: 0;
+  margin-top: 20px;
 }
 
 .hint {
   display: inline-block;
   position: relative;
-  width: 30px;
-  height: 30px;
+  width: 10px;
+  height: 10px;
   margin-right: 10px;
   border: 1px solid #28222d;
   border-radius: 50%;
@@ -210,55 +206,39 @@ input[type="radio"] {
 }
 
 .codepegs {
-  width: 400px;
-  margin-top: 60px;
+  width: 250px;
+  margin-top: 30px;
+  margin-left: 30px;
+  margin-right: 70px;
+  border: #ff5a5f solid;
 }
 
 .codepegs .peg input[type="radio"] + label {
-  margin-top: 70px;
+  margin-top: 10px;
 }
 
 /* end game overlay */
-
-.endgame {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1;
-  height: 100%;
-}
-
-.success {
-  background-color: #00c653;
-}
-
-.failure {
-  background-color: #db4445;
-}
-
-.cheat {
-  color: #f4f4f4;
-}
-
-footer {
-  padding: 8px 0;
-  border-top: 1px solid #a8a8a8;
-}
-
-footer p {
-  padding: 4px 0 4px 0;
-}
-
-/* helpers */
 
 .clearfix {
   display: flex;
   flex-direction: row;
   margin: auto;
-  width: 80%;
-  border: 2px solid black;
+  height: 30;
+  width: 50%;
+  border: 1px solid black;
   padding: 10px;
+}
+
+.peg input[type="radio"] + label {
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  margin: -1px 4px 0 0;
+  vertical-align: middle;
+  cursor: pointer;
+  border: #eaebe9 2px solid;
+  border-radius: 50%;
+  box-sizing: border-box;
 }
 
 .show-modal {
