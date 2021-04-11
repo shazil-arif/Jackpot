@@ -1,0 +1,309 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: 1;
+  font-size: 100%;
+}
+
+body {
+  background: #f4f4f4;
+  font-family: serif;
+}
+
+h1 {
+  color: #333333;
+  font-size: 1.8rem;
+  font-family: "Cinzel", serif;
+  letter-spacing: 3px;
+}
+
+h1 span {
+  color: #ffffff;
+  padding: 0 5px;
+}
+
+.MIND {
+  color: #333333;
+}
+
+a {
+  color: #1a8d7c;
+  text-decoration: none;
+  border-bottom: 1px dotted #1a8d7c;
+}
+
+a:hover {
+  color: #07594d;
+}
+
+#mastermind,
+footer {
+  width: 334px;
+  margin: 20px 10px 0 10px;
+}
+
+.rules {
+  margin: 20px 0;
+}
+
+.rules-toggle {
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.info {
+  border: #eaebe9 1px solid;
+  padding: 10px;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+.row {
+  padding: 10px 0 10px 10px;
+  width: 100px;
+  border: #a82a2a 10px solid;
+}
+
+.decode-row {
+  opacity: 0.5;
+}
+
+.current.row {
+  border: #c51f3a 7px dashed;
+}
+
+.current .decode-row {
+  opacity: 1;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+.selected input[type="radio"] + label {
+  border-color: #525554;
+}
+
+.M,
+.zero input[type="radio"] + label {
+  background: #ffb400;
+}
+
+.A,
+.one input[type="radio"] + label {
+  background: #ff5a5f;
+}
+
+.S,
+.two input[type="radio"] + label {
+  background-color: #8ce071;
+}
+
+.T,
+.three input[type="radio"] + label {
+  background-color: #00d1c1;
+}
+
+.E,
+.four input[type="radio"] + label {
+  background-color: #007a87;
+}
+
+.R,
+.five input[type="radio"] + label {
+  background-color: #7b0051;
+}
+
+.submit {
+  width: 20px;
+  height: 10px;
+  position: relative;
+  margin: 15px 15px;
+  border: none;
+  cursor: pointer;
+  background-color: #f4f4f4;
+}
+
+.submit:before {
+  left: 6px;
+  width: 5px;
+  height: 12px;
+  border-width: 0 5px 5px 0;
+  top: 50%;
+  border-style: solid;
+  border-color: #b4bb69;
+  margin-top: -11px;
+  transform: rotate(45deg);
+  content: "";
+  position: absolute;
+}
+
+.submit:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+}
+
+.hints-row {
+  width: 44px;
+  margin-top: 20px;
+}
+
+.hint {
+  display: inline-block;
+  position: relative;
+  width: 10px;
+  height: 10px;
+  margin-right: 10px;
+  border: 1px solid #28222d;
+  border-radius: 50%;
+}
+
+.hint.exact-matches {
+  background-color: #555461;
+}
+
+.hint.value-matches {
+  background-color: #ffffff;
+}
+
+.hint.none-matches:before,
+.hint.none-matches:after {
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  content: " ";
+  height: 8px;
+  width: 2px;
+  background-color: #333;
+}
+
+.hint.none-matches:before {
+  transform: rotate(45deg);
+}
+.hint.none-matches:after {
+  transform: rotate(-45deg);
+}
+
+.codepegs {
+  width: 250px;
+  margin-top: 30px;
+  margin-left: 30px;
+  margin-right: 70px;
+  border: #ff5a5f solid;
+}
+
+.codepegs .peg input[type="radio"] + label {
+  margin-top: 10px;
+}
+
+/* end game overlay */
+
+.clearfix {
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+  height: 30;
+  width: 50%;
+  border: 1px solid black;
+  padding: 10px;
+}
+
+.peg input[type="radio"] + label {
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  margin: -1px 4px 0 0;
+  vertical-align: middle;
+  cursor: pointer;
+  border: #eaebe9 2px solid;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.show-modal {
+  font-size: 2rem;
+  font-weight: 600;
+  padding: 1.75rem 3.5rem;
+  margin: 5rem 2rem;
+  border: none;
+  background-color: #fff;
+  color: #444;
+  border-radius: 10rem;
+  cursor: pointer;
+}
+
+.close-modal {
+  position: absolute;
+  top: 1.2rem;
+  right: 2rem;
+  font-size: 5rem;
+  color: #333;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.hidden {
+  display: none;
+}
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+
+  background-color: white;
+  padding: 6rem;
+  border-radius: 5px;
+  box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
+  z-index: 10;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(3px);
+  z-index: 5;
+}
+
+@media only screen and (min-device-width: 840px) {
+  h1 {
+    font-size: 2.6rem;
+  }
+
+  .rules-toggle {
+    font-size: 1.2rem;
+  }
+
+  footer {
+    width: 405px;
+    margin: 30px auto 0;
+  }
+}

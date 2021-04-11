@@ -5,7 +5,6 @@ import { Button } from "react-bootstrap";
 class SudokuBoard extends React.Component {
   constructor(props) {
     super(props);
-    this.board = this.props.SudokuModel.board;
     this.boardIsValid = true;
     this.n = 6;
     this.board = [
@@ -67,7 +66,7 @@ class SudokuBoard extends React.Component {
   updateBoard(currentBoard) {}
 
   updateBoard() {
-    
+
   }
 
   render() {
