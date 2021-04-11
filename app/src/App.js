@@ -13,8 +13,8 @@ function App() {
 		<div className="App">
 			<div>
 				<Link to="/">Home </Link>
-				<Link to="/twodots"> About Us </Link>
-				<Link to="/mastermind">Shop Now </Link>
+				<Link to="/twodots">About Us </Link>
+				<Link to="/mastermind">MasterMind</Link>
 				<Link to="/sudoku">Shop Now </Link>
 				<Link to="/slots">About Us </Link>
 				<Link to="/russianroulette">About Us </Link>
