@@ -228,6 +228,9 @@ input[type="radio"] {
   border: 1px solid black;
   padding: 10px;
 }
+.score {
+  margin-left: 10px;
+}
 
 .peg input[type="radio"] + label {
   display: inline-block;

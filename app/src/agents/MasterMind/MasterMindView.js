@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Rules from "./Rules";
 import CodePegs from "./CodePegs";
 import Peg from "./Peg";
+import EndGame from "./EndGame";
 import DecodingBoard from "./DecodingBoard";
 import "./Mastermindstyle.css";
 import Modal_page from "./Modal";
@@ -32,10 +33,11 @@ export class MasterMindView extends Component {
       exactMatches: 0,
       valueMatches: 0,
       pegsInRow: 4,
-      attempts: 10,
+      attempts: 2,
       success: false,
       endGame: false,
       start: false,
+      score: 2,
     };
   }
 
@@ -89,6 +91,7 @@ export class MasterMindView extends Component {
     let foundKey;
     let exactMatches = 0;
     let valueMatches = 0;
+    let score = this.state.score;
 
     // First pass: Look for value & position matches
     // Safely remove items if they match
@@ -98,6 +101,9 @@ export class MasterMindView extends Component {
         pegs.delete(key);
         code.delete(key);
       }
+    }
+    if (exactMatches !== 4) {
+      this.setState({ score: score - 1 });
     }
 
     // Second pass: Look for value matches anywhere in the code
@@ -132,6 +138,16 @@ export class MasterMindView extends Component {
     this.setState({ start: !this.state.start });
     this.getCode();
   };
+  reloadGame = () => {
+    this.setState({ success: false });
+    this.setState({ endGame: false });
+    this.setState({ code: this.getCode() });
+    this.setState({ currentRow: 0 });
+    this.setState({ currentGuess: new Map() });
+    this.setState({ exactMatches: 0 });
+    this.setState({ valueMatches: 0 });
+    this.setState({ score: 2 });
+  };
 
   render() {
     const className = this.state.start ? "clearfix" : "clearfix hidden";
@@ -161,6 +177,12 @@ export class MasterMindView extends Component {
             start={this.getCode}
           />
         </div>
+        <EndGame
+          endGame={this.state.endGame}
+          success={this.state.success}
+          reloadGame={this.reloadGame}
+          score={this.state.score}
+        />
       </div>
     );
   }
