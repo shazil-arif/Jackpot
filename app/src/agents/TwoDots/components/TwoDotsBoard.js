@@ -20,6 +20,7 @@ class TwoDotsBoard extends React.Component{
         this.canvasRef = React.createRef();
 
         this.updateBoard = this.updateBoard.bind(this);
+        this.handler = this.handler.bind(this);
     }
 
     updateBoard(){
@@ -45,16 +46,18 @@ class TwoDotsBoard extends React.Component{
         let canvasY = 0;
         let currentElement = this.canvasRef.current;
     
-        do{
-            totalOffsetX += currentElement.offsetLeft - currentElement.scrollLeft;
-            totalOffsetY += currentElement.offsetTop - currentElement.scrollTop;
+        if(currentElement){
+            do{
+                totalOffsetX += currentElement.offsetLeft - currentElement.scrollLeft;
+                totalOffsetY += currentElement.offsetTop - currentElement.scrollTop;
+            }
+            while(currentElement === currentElement.offsetParent)
+        
+            canvasX = x - totalOffsetX;
+            canvasY = y - totalOffsetY;
+        
+            return new Point(canvasX, canvasY);
         }
-        while(currentElement = currentElement.offsetParent)
-    
-        canvasX = x - totalOffsetX;
-        canvasY = y - totalOffsetY;
-    
-        return new Point(canvasX, canvasY);
     }
 
     drawDot(dot, color) {
@@ -71,40 +74,44 @@ class TwoDotsBoard extends React.Component{
         context.fill();
     }
 
+    componentWillUnmount(){
+        document.removeEventListener("click", this.handler);
+    }
     componentDidMount(){
-        console.log('didmount')
         this.drawBoardVisualFromTwoDotsModel(this.props.twoDotsModel);
+        document.addEventListener("click", this.handler);
+    }
 
-        document.addEventListener("click", (ev) => {
-            let pointClickedOnBoard = this.getMouseClickCoordinatesOnBoard(ev.x, ev.y);
-            for (const dot of this.drawnDotsList){
-                if (dot.isPointWithinDot(pointClickedOnBoard)){
+    handler(ev){
+        
+        let pointClickedOnBoard = this.getMouseClickCoordinatesOnBoard(ev.x, ev.y);
+        for (const dot of this.drawnDotsList){
+            if (dot.isPointWithinDot(pointClickedOnBoard)){
 
-                    if(!this.wasFirstDotSelected){
-                        this.wasFirstDotSelected = true;
-                        this.lastDotSelected = dot;   
+                if(!this.wasFirstDotSelected){
+                    this.wasFirstDotSelected = true;
+                    this.lastDotSelected = dot;   
 
-                        let point = this.getBoardCoordinatesFromCanvasCoordinates[dot.getPoint().getX()][dot.getPoint().getY()];
-                        this.path.add(point);
+                    let point = this.getBoardCoordinatesFromCanvasCoordinates[dot.getPoint().getX()][dot.getPoint().getY()];
+                    this.path.add(point);
+                }
+
+                else  {
+                    let point = this.getBoardCoordinatesFromCanvasCoordinates[dot.getPoint().getX()][dot.getPoint().getY()];
+
+                    this.path.add(point);
+                    if(this.props.twoDotsModel.validateMoves(this.path)){
+                        this.drawSegment(this.lastDotSelected.getPoint(), dot.getPoint());
+                        this.lastDotSelected = dot;
                     }
-
-                    else  {
-                        let point = this.getBoardCoordinatesFromCanvasCoordinates[dot.getPoint().getX()][dot.getPoint().getY()];
-
-                        this.path.add(point);
-                        if(this.props.twoDotsModel.validateMoves(this.path)){
-                            this.drawSegment(this.lastDotSelected.getPoint(), dot.getPoint());
-                            this.lastDotSelected = dot;
-                        }
-                        else {
-                            this.path.removeLast();
-                        }
+                    else {
+                        this.path.removeLast();
                     }
                 }
             }
+        }
 
-		});
-        
+		
     }
 
     /**
@@ -149,7 +156,7 @@ class TwoDotsBoard extends React.Component{
 		let xMargin;
 		let yMargin;
 
-		if( dotWidth > dotHeight ) {
+		if(dotWidth > dotHeight) {
 			dotDiameter = dotHeight;
 			xMargin = (canvasWidth - ((2 * dotMargin) + (numCols * dotDiameter))) / numCols;
 			yMargin = dotMargin;
@@ -179,7 +186,7 @@ class TwoDotsBoard extends React.Component{
 
                 // map center of each circle on canvas's coordinaates to board coordinates
 
-                if(!this.getBoardCoordinatesFromCanvasCoordinates[x]) this.getBoardCoordinatesFromCanvasCoordinates[x] = { };
+                if(!this.getBoardCoordinatesFromCanvasCoordinates[x]) this.getBoardCoordinatesFromCanvasCoordinates[x] = {};
                 this.getBoardCoordinatesFromCanvasCoordinates[x][y] = pointOnTwoDotsBoard;
 
     
