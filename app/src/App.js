@@ -13,6 +13,8 @@ import { useState } from "react";
 import React from 'react'
 
 function App() {
+	// const _credits = useContext(CreditContext);
+
 	const [credits, setCredits] = useState(CreditInterface.getCredits());
 	let oc = () => {
 		CreditInterface.addCredits(10, "Home");
@@ -31,8 +33,8 @@ function App() {
 	function Wrapper(Component){
 		return function(){
 			return (
-					<Component setCredits={setCredits}></Component>
-				)
+				<Component setCredits={setCredits}></Component>
+			)
 		}
 	}
 	
@@ -53,7 +55,7 @@ function App() {
 			<Switch>
 				<Route exact path="/" component={MainView} />
 				<Route exact path="/twodots" component= {Wrapper(TwoDotsView)}/>
-				<Route exact path="/mastermind" component={MasterMindView} />
+				<Route exact path="/mastermind" component={Wrapper(MasterMindView)} />
 				<Route exact path="/russianroulette" component={RussiaRouletteView} />
 				<Route exact path="/sudoku" component={SudokuView} />
 				<Route exact path="/slots" component={SlotsView} />

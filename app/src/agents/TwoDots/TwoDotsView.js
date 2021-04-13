@@ -7,8 +7,8 @@ import { Button } from "react-bootstrap";
 class TwoDotsView extends Component {
 	constructor(props) {
 		super(props);
-		this.twoDotsModel = new TwoDotsModel();
-	
+		this.twoDotsModel = TwoDotsModel;
+		this.twoDotsController = TwoDotsController;
 	}
 	
 
@@ -16,9 +16,8 @@ class TwoDotsView extends Component {
 		return (
 			<div>
 				<h1>Two Dots</h1>
-				<TwoDotsBoard twoDotsModel = {this.twoDotsModel} setCredits={this.props.setCredits} ></TwoDotsBoard>
+				<TwoDotsBoard twoDotsModel = {this.twoDotsModel} setCredits={this.props.setCredits} twoDotsController = {this.twoDotsController} ></TwoDotsBoard>
 				<div></div>
-				<Button style={{marginTop: '1%'}} variant="danger">Clear Current Selection</Button>
 			</div>
 		) 
 		
