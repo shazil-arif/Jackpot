@@ -81,6 +81,7 @@ class SudokuBoard extends React.Component {
       solution: solutions[i],
       gameStarted: true,
       win: false,
+      n: 10
     });
   }
 
@@ -91,16 +92,37 @@ class SudokuBoard extends React.Component {
   }
 
   validateBoard() {
-    let rows = [{}, {}, {}, {}, {}, {}, {}, {}, {}];
-    let cols = [{}, {}, {}, {}, {}, {}, {}, {}, {}];
-    let boxes = [{}, {}, {}, {}, {}, {}, {}, {}, {}];
+    let rows = [];
+    let cols = [];
+    let boxes = [];
+    for (let i = 0; i < 9; i++) {
+      rows.push({"1":0, "2":0, "3":0, "4":0, "5":0, "6":0, "7":0, "8":0, "9":0});
+      cols.push({"1":0, "2":0, "3":0, "4":0, "5":0, "6":0, "7":0, "8":0, "9":0});
+      boxes.push({"1":0, "2":0, "3":0, "4":0, "5":0, "6":0, "7":0, "8":0, "9":0});
+    }
 
     for (let i = 0; i < 9; i++) {
       for (let j = 0; j < 9; j++) {
         let val = this.state.currentBoard[i][j];
         if (
-          val == ""
+          val != "1" &&
+          val != "2" &&
+          val != "3" &&
+          val != "4" &&
+          val != "5" &&
+          val != "6" &&
+          val != "7" &&
+          val != "8" &&
+          val != "9"
         ) {
+          return false;
+        }
+        let k = Math.floor((i/3))*3 + Math.floor(j/3);
+        rows[i][val] = rows[i][val] + 1;
+        cols[j][val] = cols[j][val] + 1;
+        boxes[k][val] = boxes[k][val] + 1;
+
+        if (rows[i][val] > 1 || cols[j][val] > 1 || boxes[k][val] > 1){
           return false;
         }
       }
@@ -264,6 +286,8 @@ class SudokuBoard extends React.Component {
         )}
         <h2 style={{ "font-size": "25px" }}>Instructions:</h2>
         <p>
+          You have 10 tries each game.
+          
           Fill in the empty squares such that:
           <ol>
             <li>1. Each row must contain the digits 1-9 without repetition.</li>
