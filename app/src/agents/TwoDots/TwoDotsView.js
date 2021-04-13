@@ -16,7 +16,7 @@ class TwoDotsView extends Component {
 		return (
 			<div>
 				<h1>Two Dots</h1>
-				<TwoDotsBoard twoDotsModel = {this.twoDotsModel} updateClick ></TwoDotsBoard>
+				<TwoDotsBoard twoDotsModel = {this.twoDotsModel} setCredits={this.props.setCredits} ></TwoDotsBoard>
 				<div></div>
 				<Button style={{marginTop: '1%'}} variant="danger">Clear Current Selection</Button>
 			</div>

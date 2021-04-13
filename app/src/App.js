@@ -10,6 +10,7 @@ import { SlotsView } from "./agents/Slots/SlotsView";
 import CreditInterface from "./CreditInterface";
 import { Button } from "react-bootstrap";
 import { useState } from "react";
+import React from 'react'
 
 function App() {
 	const [credits, setCredits] = useState(CreditInterface.getCredits());
@@ -26,6 +27,16 @@ function App() {
 		console.log(CreditInterface.getCredits());
 	};
 
+	
+	function Wrapper(Component){
+		return function(){
+			return (
+					<Component setCredits={setCredits}></Component>
+				)
+		}
+	}
+	
+
 	return (
 		<div className="App">
 			<div>
@@ -41,13 +52,13 @@ function App() {
 			</div>
 			<Switch>
 				<Route exact path="/" component={MainView} />
-				<Route exact path="/twodots" component={TwoDotsView} />
+				<Route exact path="/twodots" component= {Wrapper(TwoDotsView)}/>
 				<Route exact path="/mastermind" component={MasterMindView} />
 				<Route exact path="/russianroulette" component={RussiaRouletteView} />
 				<Route exact path="/sudoku" component={SudokuView} />
 				<Route exact path="/slots" component={SlotsView} />
 			</Switch>
-			<p>Current Credits: {CreditInterface.getCredits()}</p>
+			<p>Current Credits: { credits }</p>
 		</div>
 	);
 }
