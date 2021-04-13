@@ -7,8 +7,24 @@ import TwoDotsView from "./agents/TwoDots/TwoDotsView";
 import { RussiaRouletteView } from "./agents/RussianRoulette/RussiaRouletteView";
 import SudokuView from "./agents/Sudoku/SudokuView";
 import { SlotsView } from "./agents/Slots/SlotsView";
+import CreditInterface from "./CreditInterface";
+import { Button } from "react-bootstrap";
+import { useState } from "react";
 
 function App() {
+	const [credits, setCredits] = useState(CreditInterface.getCredits());
+	let oc = () => {
+		CreditInterface.addCredits(10, "Home");
+	};
+
+	let oc2 = () => {
+		console.log(CreditInterface.printEarnings());
+	};
+
+	let oc3 = () => {
+		console.log(CreditInterface.getCredits());
+	};
+
 	return (
 		<div className="App">
 			<div>
@@ -18,6 +34,9 @@ function App() {
 				<Link to="/sudoku">Sudoku </Link>
 				<Link to="/slots">Slots </Link>
 				<Link to="/russianroulette">Russian Roulette </Link>
+				<button onClick={oc}>Add </button>
+				<button onClick={oc2}>Print </button>
+				<button onClick={oc3}>Update </button>
 			</div>
 			<Switch>
 				<Route exact path="/" component={MainView} />
@@ -27,6 +46,7 @@ function App() {
 				<Route exact path="/sudoku" component={SudokuView} />
 				<Route exact path="/slots" component={SlotsView} />
 			</Switch>
+			<p>Current Credits: {CreditInterface.getCredits()}</p>
 		</div>
 	);
 }
