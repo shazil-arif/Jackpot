@@ -55,7 +55,7 @@ function App() {
 				<Route exact path="/twodots" component= {Wrapper(TwoDotsView)}/>
 				<Route exact path="/mastermind" component={MasterMindView} />
 				<Route exact path="/russianroulette" component={RussiaRouletteView} />
-				<Route exact path="/sudoku" component={SudokuView} />
+				<Route exact path="/sudoku" component={Wrapper(SudokuView)} />
 				<Route exact path="/slots" component={SlotsView} />
 			</Switch>
 			<p>Current Credits: { credits }</p>
