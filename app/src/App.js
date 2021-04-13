@@ -5,7 +5,7 @@ import MainView from "./agents/Main/MainView";
 import { MasterMindView } from "./agents/MasterMind/MasterMindView";
 import TwoDotsView from "./agents/TwoDots/TwoDotsView";
 import { RussianRouletteView } from "./agents/RussianRoulette/RussianRouletteView";
-import { SudokuView } from "./agents/Sudoku/SudokuView";
+import  SudokuView  from "./agents/Sudoku/SudokuView";
 import { SlotsView } from "./agents/Slots/SlotsView";
 import CreditInterface from "./CreditInterface";
 import { Button } from "react-bootstrap";
@@ -54,7 +54,7 @@ function App() {
 				<Route exact path="/" component={MainView} />
 				<Route exact path="/twodots" component= {Wrapper(TwoDotsView)}/>
 				<Route exact path="/mastermind" component={MasterMindView} />
-				<Route exact path="/russianroulette" component={RussianRouletteView} />
+				<Route exact path="/russianroulette" component={Wrapper(RussianRouletteView)} />
 				<Route exact path="/sudoku" component={SudokuView} />
 				<Route exact path="/slots" component={SlotsView} />
 			</Switch>

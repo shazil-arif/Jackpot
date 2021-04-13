@@ -8,6 +8,7 @@ import picLoaded from './Loaded.png';
 import picLoaded_s from './Loaded_s.png';
 
 import RussianRouletteModel from "./RussianRouletteModel";
+import CreditInterface from '../../CreditInterface';
 
 export class RussianRouletteView extends Component {
 	constructor(props) {
@@ -103,9 +104,17 @@ export class RussianRouletteView extends Component {
 
 	quit()
 	{
-		if(this.state.gameStage==="fail"){alert(" quit with zero multiplier,score goes to zero as the coconut is dead\nTODO: imp score chagne and reset()  ")}
-		else{alert(" quit with score multiplier = " + this.state.multiplierGained+"\nTODO: imp score chagne and reset()")
-	}}
+		if(this.state.gameStage==="fail")
+		{
+			alert(" quit with zero multiplier,score goes to zero as the coconut is dead\nTODO: imp score chagne and reset()  ")
+			this.props.setCredits(0)
+		}
+		else
+		{
+			alert(" quit with score multiplier = " + this.state.multiplierGained+"\nTODO: imp score chagne and reset()")
+			this.props.setCredits(CreditInterface.getCredits()*this.state.multiplierGained)
+		}
+}
 
 	render() {
 		console.log(this.state)
