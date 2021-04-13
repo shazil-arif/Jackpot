@@ -10,4 +10,4 @@ class Point {
         return this.y;
     }
 }
-export class Point;
+export default Point;

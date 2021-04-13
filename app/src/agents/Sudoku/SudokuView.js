@@ -1,12 +1,21 @@
 import React, { Component } from "react";
+import SudokuController from './SudokuController';
+import SudokuModel from "./SudokuModel";
+import SudokuBoard from './components/SudokuBoard';
 
-export class SudokuView extends Component {
+class SudokuView extends Component {
+	constructor(props) {
+		super(props);
+	}
+
 	render() {
 		return (
 			<div>
-				<h1>This is sudoku.</h1>
+				<h1>Sudoku</h1>
+				<SudokuBoard />
 			</div>
-		);
+		) 
+		
 	}
 }
 

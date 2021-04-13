@@ -57,7 +57,9 @@ class TwoDotsController extends Bootstrap {
     }
 
     startNewGame(game){
-        
+
     }
 }
+
+export default TwoDotsController;
 
