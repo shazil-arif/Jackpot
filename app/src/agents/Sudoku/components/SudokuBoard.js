@@ -1,6 +1,7 @@
 // this will handle the drawing of dots, canvas, drawing lines
 import React from "react";
 import { Button } from "react-bootstrap";
+import CreditInterface from '../../../CreditInterface';
 
 class SudokuBoard extends React.Component {
   constructor(props) {
@@ -32,19 +33,10 @@ class SudokuBoard extends React.Component {
         ["", "", "", "", "", "", "", "", ""],
         ["", "", "", "", "", "", "", "", ""],
       ],
-      solution: [
-        ["", "", "", "", "", "", "", "", ""],
-        ["", "", "", "", "", "", "", "", ""],
-        ["", "", "", "", "", "", "", "", ""],
-        ["", "", "", "", "", "", "", "", ""],
-        ["", "", "", "", "", "", "", "", ""],
-        ["", "", "", "", "", "", "", "", ""],
-        ["", "", "", "", "", "", "", "", ""],
-        ["", "", "", "", "", "", "", "", ""],
-        ["", "", "", "", "", "", "", "", ""],
-      ],
       currField: "",
+      iter: 0,
     };
+    this.checkWin = this.checkWin.bind(this);
   }
 
   initializeBoard() {
@@ -61,28 +53,18 @@ class SudokuBoard extends React.Component {
         ["7", "4", "5", "2", "8", "6", "3", "1", "9"],
       ],
     ];
-    const i = 0;
-    const solutions = [
-      [
-        ["3", "1", "6", "5", "7", "8", "4", "9", "2"],
-        ["5", "2", "9", "1", "3", "4", "7", "6", "8"],
-        ["4", "8", "7", "6", "2", "9", "5", "3", "1"],
-        ["2", "6", "3", "4", "1", "5", "9", "8", "7"],
-        ["9", "7", "4", "8", "6", "3", "1", "2", "5"],
-        ["8", "5", "1", "7", "9", "2", "6", "4", "3"],
-        ["1", "3", "8", "9", "4", "7", "2", "5", "6"],
-        ["6", "9", "2", "3", "5", "1", "8", "7", "4"],
-        ["7", "4", "5", "2", "8", "6", "3", "1", "9"],
-      ],
-    ];
+    const i = this.state.iter;
     this.setState({
       initialBoard: JSON.parse(JSON.stringify(possibleBoards[i])),
       currentBoard: JSON.parse(JSON.stringify(possibleBoards[i])),
-      solution: solutions[i],
       gameStarted: true,
       win: false,
-      n: 10
+      n: 10,
+      iter: i+1%(possibleBoards.length-1)
     });
+
+    CreditInterface.addCredits(-10, "Sudoku");
+    this.props.setCredits(CreditInterface.getCredits());
   }
 
   resetBoard() {
@@ -92,6 +74,29 @@ class SudokuBoard extends React.Component {
   }
 
   validateBoard() {
+    for (let i = 0; i < 9; i++) {
+      for (let j = 0; j < 9; j++) {
+        let val = this.state.currentBoard[i][j];
+        if (
+          val != "1" &&
+          val != "2" &&
+          val != "3" &&
+          val != "4" &&
+          val != "5" &&
+          val != "6" &&
+          val != "7" &&
+          val != "8" &&
+          val != "9"
+        ) {
+          return false;
+        }
+        }
+      }
+    
+    return true;
+  }
+
+  checkWin() {
     let rows = [];
     let cols = [];
     let boxes = [];
@@ -128,13 +133,7 @@ class SudokuBoard extends React.Component {
       }
     }
     return true;
-  }
-
-  checkWin() {
-    return (
-      JSON.stringify(this.state.currentBoard) ==
-      JSON.stringify(this.state.solution)
-    );
+  
   }
 
   checkBoard() {
@@ -147,6 +146,8 @@ class SudokuBoard extends React.Component {
           win: true,
           gameStarted: false,
         });
+        CreditInterface.addCredits(this.state.n*1.5, "Sudoku");
+        this.props.setCredits(CreditInterface.getCredits());
       } else {
         this.setState({
           n: this.state.n - 1,
@@ -262,7 +263,7 @@ class SudokuBoard extends React.Component {
             style={{ margin: "2px" }}
             disabled={true}
           >
-            Current score for winning: {Math.max(this.state.n * 1000, 0)}
+            Current score for winning: {Math.max(this.state.n * 1.5, 0)}
           </Button>
         </div>
 
