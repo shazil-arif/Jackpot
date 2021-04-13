@@ -12,7 +12,7 @@ class SudokuView extends Component {
 		return (
 			<div>
 				<h1>Sudoku</h1>
-				<SudokuBoard />
+				<SudokuBoard setCredits={this.props.setCredits} />
 			</div>
 		) 
 		

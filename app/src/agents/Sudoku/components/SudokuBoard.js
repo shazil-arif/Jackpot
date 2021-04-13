@@ -1,6 +1,7 @@
 // this will handle the drawing of dots, canvas, drawing lines
 import React from "react";
 import { Button } from "react-bootstrap";
+import CreditInterface from '../../../CreditInterface';
 
 class SudokuBoard extends React.Component {
   constructor(props) {
@@ -33,7 +34,9 @@ class SudokuBoard extends React.Component {
         ["", "", "", "", "", "", "", "", ""],
       ],
       currField: "",
+      iter: 0,
     };
+    this.checkWin = this.checkWin.bind(this);
   }
 
   initializeBoard() {
@@ -50,14 +53,18 @@ class SudokuBoard extends React.Component {
         ["7", "4", "5", "2", "8", "6", "3", "1", "9"],
       ],
     ];
-    const i = 0;
+    const i = this.state.iter;
     this.setState({
       initialBoard: JSON.parse(JSON.stringify(possibleBoards[i])),
       currentBoard: JSON.parse(JSON.stringify(possibleBoards[i])),
       gameStarted: true,
       win: false,
-      n: 10
+      n: 10,
+      iter: i+1%(possibleBoards.length-1)
     });
+
+    CreditInterface.addCredits(-10, "Sudoku");
+    this.props.setCredits(CreditInterface.getCredits());
   }
 
   resetBoard() {
@@ -139,6 +146,8 @@ class SudokuBoard extends React.Component {
           win: true,
           gameStarted: false,
         });
+        CreditInterface.addCredits(this.state.n*1.5, "Sudoku");
+        this.props.setCredits(CreditInterface.getCredits());
       } else {
         this.setState({
           n: this.state.n - 1,
