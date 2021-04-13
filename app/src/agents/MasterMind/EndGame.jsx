@@ -3,10 +3,16 @@ import classNames from "classnames";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Mastermindstyle.css";
+import CreditInterface from "../../CreditInterface";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 class EndGame extends Component {
+  constructor(props) {
+    super(props);
+    this.test = this.test.bind(this);
+  }
   test() {
-    console.log("submitted score:");
+    CreditInterface.addCredits(this.props.score, "MasterMind");
+    this.props.setCredits(CreditInterface.getCredits());
   }
   render() {
     const endGameInfoClass = classNames({

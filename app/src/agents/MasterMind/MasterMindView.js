@@ -33,11 +33,11 @@ export class MasterMindView extends Component {
       exactMatches: 0,
       valueMatches: 0,
       pegsInRow: 4,
-      attempts: 2,
+      attempts: 5,
       success: false,
       endGame: false,
       start: false,
-      score: 2,
+      score: 5,
     };
   }
 
@@ -146,7 +146,7 @@ export class MasterMindView extends Component {
     this.setState({ currentGuess: new Map() });
     this.setState({ exactMatches: 0 });
     this.setState({ valueMatches: 0 });
-    this.setState({ score: 2 });
+    this.setState({ score: 5 });
   };
 
   render() {
@@ -182,6 +182,7 @@ export class MasterMindView extends Component {
           success={this.state.success}
           reloadGame={this.reloadGame}
           score={this.state.score}
+          setCredits={this.props.setCredits}
         />
       </div>
     );
