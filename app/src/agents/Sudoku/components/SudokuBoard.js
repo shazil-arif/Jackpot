@@ -43,22 +43,22 @@ class SudokuBoard extends React.Component {
         ["", "", "", "", "", "", "", "", ""],
         ["", "", "", "", "", "", "", "", ""],
       ],
-      test: "Test",
+      currField: "",
     };
   }
 
   initializeBoard() {
     const possibleBoards = [
       [
-        ["3", "1", "6", "5", "7", "8", "4", "9", "2"],
-        ["5", "2", "", "1", "3", "4", "7", "6", "8"],
-        ["4", "8", "7", "6", "2", "9", "5", "", "1"],
-        ["2", "6", "3", "", "1", "5", "9", "", "7"],
-        ["9", "7", "4", "8", "", "3", "1", "", "5"],
-        ["8", "5", "1", "7", "9", "2", "6", "", "3"],
-        ["1", "3", "8", "9", "", "7", "", "5", "6"],
-        ["6", "9", "2", "3", "5", "", "8", "7", "4"],
-        ["7", "4", "5", "2", "8", "", "3", "1", "9"],
+        ["", "1", "6", "5", "7", "8", "4", "9", "2"],
+        ["5", "2", "9", "1", "3", "4", "7", "6", "8"],
+        ["4", "8", "7", "6", "2", "9", "5", "3", "1"],
+        ["2", "6", "3", "4", "1", "5", "9", "8", "7"],
+        ["9", "7", "4", "8", "6", "3", "1", "2", "5"],
+        ["8", "5", "1", "7", "9", "2", "6", "4", "3"],
+        ["1", "3", "8", "9", "4", "7", "2", "5", "6"],
+        ["6", "9", "2", "3", "5", "1", "8", "7", "4"],
+        ["7", "4", "5", "2", "8", "6", "3", "1", "9"],
       ],
     ];
     const i = 0;
@@ -80,6 +80,7 @@ class SudokuBoard extends React.Component {
       currentBoard: JSON.parse(JSON.stringify(possibleBoards[i])),
       solution: solutions[i],
       gameStarted: true,
+      win: false,
     });
   }
 
@@ -90,6 +91,20 @@ class SudokuBoard extends React.Component {
   }
 
   validateBoard() {
+    let rows = [{}, {}, {}, {}, {}, {}, {}, {}, {}];
+    let cols = [{}, {}, {}, {}, {}, {}, {}, {}, {}];
+    let boxes = [{}, {}, {}, {}, {}, {}, {}, {}, {}];
+
+    for (let i = 0; i < 9; i++) {
+      for (let j = 0; j < 9; j++) {
+        let val = this.state.currentBoard[i][j];
+        if (
+          val == ""
+        ) {
+          return false;
+        }
+      }
+    }
     return true;
   }
 
@@ -108,6 +123,7 @@ class SudokuBoard extends React.Component {
       if (this.checkWin()) {
         this.setState({
           win: true,
+          gameStarted: false,
         });
       } else {
         this.setState({
@@ -126,7 +142,7 @@ class SudokuBoard extends React.Component {
     newBoard[y][x] = e;
     this.setState({
       currentBoard: newBoard,
-      test: "Y:" + y + " X:" + x + " VAL:" + e,
+      currField: "Y:" + y + " X:" + x + " VALUE:" + e,
     });
   }
 
@@ -158,7 +174,9 @@ class SudokuBoard extends React.Component {
           <td>
             <input
               defaultValue={this.state.initialBoard[i - 1][j - 1]}
-              disabled={this.state.initialBoard[i - 1][j - 1] != ""}
+              disabled={
+                this.state.initialBoard[i - 1][j - 1] != "" || this.state.win
+              }
               type="text"
               style={style}
               onChange={(e) =>
@@ -196,7 +214,7 @@ class SudokuBoard extends React.Component {
           style={{ margin: "2px" }}
           disabled={this.state.gameStarted}
         >
-          Start Game
+          {this.state.win ? "New Game" : "Start Game"}
         </Button>
         <Button
           variant="warning"
@@ -208,12 +226,20 @@ class SudokuBoard extends React.Component {
         </Button>
         <br />
         <div>
-          <Button variant="outline-dark" style={{ margin: "2px" }} disabled={true}>
+          <Button
+            variant="outline-dark"
+            style={{ margin: "2px" }}
+            disabled={true}
+          >
             Tries left: {Math.max(this.state.n, 0)}
           </Button>
         </div>
         <div>
-          <Button variant="outline-dark" style={{ margin: "2px" }} disabled={true}>
+          <Button
+            variant="outline-dark"
+            style={{ margin: "2px" }}
+            disabled={true}
+          >
             Current score for winning: {Math.max(this.state.n * 1000, 0)}
           </Button>
         </div>
@@ -225,7 +251,6 @@ class SudokuBoard extends React.Component {
             </Button>
           </div>
         )}
-        <br />
         {this.state.win && (
           <div>
             <Button
@@ -237,13 +262,21 @@ class SudokuBoard extends React.Component {
             </Button>
           </div>
         )}
-
-        <ol>
-          {this.state.currentBoard.map((n) => (
-            <li>{n}</li>
-          ))}
-        </ol>
-        {this.state.test}
+        <h2 style={{ "font-size": "25px" }}>Instructions:</h2>
+        <p>
+          Fill in the empty squares such that:
+          <ol>
+            <li>1. Each row must contain the digits 1-9 without repetition.</li>
+            <li>
+              2. Each column must contain the digits 1-9 without repetition.
+            </li>
+            <li>
+              3. Each of the nine 3x3 sub-boxes of the grid must contain the
+              digits 1-9 without repetition.
+            </li>
+          </ol>
+        </p>
+        Field: {this.state.currField}
       </div>
     );
   }
