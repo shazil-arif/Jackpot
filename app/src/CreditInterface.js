@@ -5,6 +5,9 @@ class CreditInterface {
 		this.history = [];
 	}
 
+	getCredits() {
+		return this.credits;
+	}
 	addCredits(credits, game) {
 		this.credits += credits;
 		this.history.push({ credits: credits, game: game });
