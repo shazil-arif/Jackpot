@@ -15,6 +15,7 @@ function App() {
 	const [credits, setCredits] = useState(CreditInterface.getCredits());
 	let oc = () => {
 		CreditInterface.addCredits(10, "Home");
+		setCredits(CreditInterface.getCredits())
 	};
 
 	let oc2 = () => {
