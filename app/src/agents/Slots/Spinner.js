@@ -1,13 +1,12 @@
 import React from "react";
 import Wheel from "./Wheel";
 
-import banana from "../../images/banana.png";
-import cherries from "../../images/cherries.png";
-import mango from "../../images/mango.png";
-import pineapple from "../../images/pineapple.png";
-import guava from "../../images/guava.png";
-import dragonfruit from "../../images/dragon-fruit.png";
-import { Container, Row, Col } from "react-bootstrap";
+import banana from "../../images/fruits/banana.png";
+import cherries from "../../images/fruits/cherries.png";
+import mango from "../../images/fruits/mango.png";
+import pineapple from "../../images/fruits/pineapple.png";
+import guava from "../../images/fruits/guava.png";
+import dragonfruit from "../../images/fruits/dragon-fruit.png";
 
 class Spinner extends React.Component {
 	state = {
