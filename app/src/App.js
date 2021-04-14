@@ -79,7 +79,7 @@ function App() {
 				</Link>
 			</Navbar>
 			<Switch>
-				<Route exact path="/" component={MainView} />
+				<Route exact path="/" component={Wrapper(MainView)} />
 				<Route exact path="/twodots" component={Wrapper(TwoDotsView)} />
 				<Route exact path="/mastermind" component={Wrapper(MasterMindView)} />
 				<Route exact path="/sudoku" component={Wrapper(SudokuView)} />

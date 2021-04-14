@@ -26,13 +26,13 @@ class TwoDotsBoard extends React.Component{
         this.handler = this.handler.bind(this);
 
         this.state = { showModal: false };
-        if(this.props.twoDotsController.moveCount === 0) this.props.twoDotsController.moveCount = 5;
+        if(this.props.twoDotsController.moveCount === -1) this.props.twoDotsController.moveCount = 5;
     }
 
    
 
     updateBoard(){
-        if(this.path.size() === 0) {
+        if(this.path.size() <= 1) {
             alert('No dots selected')
         }
         else{
@@ -41,7 +41,8 @@ class TwoDotsBoard extends React.Component{
             this.props.twoDotsController.moveCount--;
 
             if(this.props.twoDotsController.moveCount === 0){
-                this.setState({showModal: true})
+                CreditInterface.addCredits(this.path.size(), 'TwoDots');    
+                this.setState({showModal: true});
             }
             else{
                 CreditInterface.addCredits(this.path.size(), 'TwoDots');
@@ -242,7 +243,7 @@ class TwoDotsBoard extends React.Component{
                     </Modal.Header>
 
                     <Modal.Body>
-                        <p>{CreditInterface.getCredits()}</p>
+                        <p>You Earned {CreditInterface.getCredits()}</p>
                     </Modal.Body>
 
                     <Modal.Footer>

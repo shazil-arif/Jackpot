@@ -6,7 +6,7 @@ export class MainView extends Component {
 		return (
 			<div>
 				<h1 style={{ marginBottom: "2%" }}>Welcome to Jackpot!</h1>
-				<CardView></CardView>
+				<CardView setCredits={this.props.setCredits}></CardView>
 			</div>
 		);
 	}

@@ -19,6 +19,7 @@ class CardView extends Component {
 
 		let resetCreds = () => {
 			CreditInterface.resetCredits();
+			this.props.setCredits(CreditInterface.getCredits());
 		};
 		return (
 			<Container>
