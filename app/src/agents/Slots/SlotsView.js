@@ -23,37 +23,42 @@ export const SlotsView = (props) => {
 		}
 	};
 
-	const handleStop = () => {
-		setIsRunning(false);
-	};
-
 	const handleResult = (wheels) => {
 		const images = wheels.map((wheel) => wheel.split("/").pop());
 		const result = uniq(images);
 		// Lose
 		if (result.length == 3) {
 			CreditInterface.removeCredits(10, "Slots");
+			setCredits(credits - 10);
+			setWinner("Sorry, you lose!");
 		}
 		// Win Lot
 		else if (result.length == 1) {
 			if (result[0].split(".")[0] == "banana") {
 				CreditInterface.addCredits(MAX_PRIZE * 2, "Slots");
-				// setWinner("You won the largest prize! Congrats!");
+				setCredits(credits + MAX_PRIZE * 2);
+				setWinner("You won the largest prize! Congrats!");
 			} else {
 				CreditInterface.addCredits(MAX_PRIZE, "Slots");
-				// setWinner("You won a large prize!");
+				setWinner("You won a large prize!");
+				setCredits(credits + MAX_PRIZE);
 			}
 		}
 		// Win Little (2)
 		else if (images[0] == images[1] || images[1] == images[2]) {
 			CreditInterface.addCredits(20, "Slots");
-			// setWinner("You won a small prize!");
+			setCredits(credits + 20);
+			setWinner("You won a small prize!");
 		} else {
 			CreditInterface.addCredits(10, "Slots");
-			// setWinner("You won a tiny prize. Not bad.");
+			setCredits(credits + 10);
+			setWinner("You won a tiny prize. Not bad.");
 		}
-		console.log(images);
-
+	};
+	const handleStop = () => {
+		setIsRunning(false);
+	};
+	const retrieve = () => {
 		props.setCredits(CreditInterface.getCredits());
 	};
 	return (
@@ -78,10 +83,18 @@ export const SlotsView = (props) => {
 					disabled={!isRunning}
 				>
 					Stop Spinning
+				</Button>{" "}
+				<Button
+					variant="success"
+					size="lg"
+					onClick={retrieve}
+					disabled={isRunning}
+				>
+					Retrieve Winnings
 				</Button>
 			</div>
 			<p>{winner}</p>
-
+			<p>Current Payout: {credits}</p>
 			<Accordion defaultActiveKey="0">
 				<Card>
 					<Accordion.Toggle as={Card.Header} eventKey="1">
