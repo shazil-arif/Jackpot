@@ -33,8 +33,7 @@ class SudokuBoard extends React.Component {
         ["", "", "", "", "", "", "", "", ""],
         ["", "", "", "", "", "", "", "", ""],
       ],
-      currField: "",
-      iter: 0,
+      iter: 1,
     };
     this.checkWin = this.checkWin.bind(this);
   }
@@ -171,6 +170,11 @@ class SudokuBoard extends React.Component {
   
   }
 
+  retrieveEarnings() {
+    CreditInterface.addCredits(this.state.n*1.5 - 10, "Sudoku");
+    this.props.setCredits(CreditInterface.getCredits());
+  }
+
   checkBoard() {
     if (this.validateBoard()) {
       this.setState({
@@ -181,8 +185,7 @@ class SudokuBoard extends React.Component {
           win: true,
           gameStarted: false,
         });
-        // CreditInterface.addCredits(this.state.n*1.5, "Sudoku");
-        // this.props.setCredits(CreditInterface.getCredits());
+        
       } else {
         this.setState({
           n: this.state.n - 1,
@@ -316,9 +319,9 @@ class SudokuBoard extends React.Component {
             <Button
               variant="secondary"
               style={{ margin: "2px" }}
-              disabled={true}
+              onClick={(e) => this.retrieveEarnings(e)}
             >
-              Win!
+              Win! Click here to retrieve your earnings!
             </Button>
           </div>
         )}
@@ -338,7 +341,6 @@ class SudokuBoard extends React.Component {
             </li>
           </ol>
         </p>
-        Field: {this.state.currField}
       </div>
     );
   }
