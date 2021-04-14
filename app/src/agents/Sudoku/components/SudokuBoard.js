@@ -52,6 +52,16 @@ class SudokuBoard extends React.Component {
         ["6", "9", "2", "3", "5", "1", "8", "7", "4"],
         ["7", "4", "5", "2", "8", "6", "3", "1", "9"],
       ],
+      [
+        ['3', '5', '4', '2', '9', '8', '1', '6', '7'], 
+        ['1', '2', '8', '6', '7', '5', '3', '9', '4'], 
+        ['6', '9', '7', '3', '4', '1', '8', '2', '5'], 
+        ['5', '1', '6', '4', '8', '7', '9', '3', '2'], 
+        ['7', '3', '2', '1', '6', '9', '4', '5', '8'], 
+        ['8', '4', '9', '5', '3', '2', '7', '1', '6'], 
+        ['4', '7', '5', '9', '1', '6', '2', '8', '3'], 
+        ['9', '6', '3', '8', '2', '4', '5', '7', '1'], 
+        ['', '8', '1', '7', '5', '3', '6', '4', '9']]
     ];
     const i = this.state.iter;
     this.setState({
@@ -63,8 +73,8 @@ class SudokuBoard extends React.Component {
       iter: i+1%(possibleBoards.length-1)
     });
 
-    CreditInterface.addCredits(-10, "Sudoku");
-    this.props.setCredits(CreditInterface.getCredits());
+    // CreditInterface.addCredits(-10, "Sudoku");
+    // this.props.setCredits(CreditInterface.getCredits());
   }
 
   resetBoard() {
@@ -109,19 +119,6 @@ class SudokuBoard extends React.Component {
     for (let i = 0; i < 9; i++) {
       for (let j = 0; j < 9; j++) {
         let val = this.state.currentBoard[i][j];
-        if (
-          val != "1" &&
-          val != "2" &&
-          val != "3" &&
-          val != "4" &&
-          val != "5" &&
-          val != "6" &&
-          val != "7" &&
-          val != "8" &&
-          val != "9"
-        ) {
-          return false;
-        }
         let k = Math.floor((i/3))*3 + Math.floor(j/3);
         rows[i][val] = rows[i][val] + 1;
         cols[j][val] = cols[j][val] + 1;
@@ -164,8 +161,7 @@ class SudokuBoard extends React.Component {
     let newBoard = this.state.currentBoard;
     newBoard[y][x] = e;
     this.setState({
-      currentBoard: newBoard,
-      currField: "Y:" + y + " X:" + x + " VALUE:" + e,
+      currentBoard: newBoard
     });
   }
 
