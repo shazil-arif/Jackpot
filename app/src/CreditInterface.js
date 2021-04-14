@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 class CreditInterface {
 	constructor() {
-		this.credits = 0;
+		this.credits = localStorage.getItem("credits") || 100;
 		this.history = [];
 	}
 
@@ -48,6 +48,7 @@ class CreditInterface {
 			string += JSON.stringify(item) + "\n";
 		});
 		localStorage.setItem("creditReport", string);
+		localStorage.setItem("credits", this.credits);
 	}
 
 	printEarnings() {
