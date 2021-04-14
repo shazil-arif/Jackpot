@@ -34,6 +34,7 @@ class SudokuBoard extends React.Component {
         ["", "", "", "", "", "", "", "", ""],
       ],
       iter: 1,
+      deltaCredits: 0,
     };
     this.checkWin = this.checkWin.bind(this);
   }
@@ -100,18 +101,9 @@ class SudokuBoard extends React.Component {
       gameStarted: true,
       win: false,
       n: 10,
-      iter: (i+1)%(possibleBoards.length)
+      iter: (i+1)%(possibleBoards.length),
+      deltaCredits: this.state.deltaCredits-10,
     });
-    // this.deductPoints();
-    // this.setState(currentState => {
-    //   currentState.initialBoard = JSON.parse(JSON.stringify(possibleBoards[i]));
-    //   currentState.currentBoard = JSON.parse(JSON.stringify(possibleBoards[i]));
-    //   currentState.gameStarted = true;
-    //   currentState.win = false;
-    //   currentState.n = 10;
-    //   currentState.iter = (i+1)%(possibleBoards.length);
-    //   return currentState;
-    // });    
   }
 
   resetBoard() {
@@ -171,7 +163,7 @@ class SudokuBoard extends React.Component {
   }
 
   retrieveEarnings() {
-    CreditInterface.addCredits(this.state.n*1.5 - 10, "Sudoku");
+    CreditInterface.addCredits(this.state.deltaCredits, "Sudoku");
     this.props.setCredits(CreditInterface.getCredits());
   }
 
@@ -184,6 +176,7 @@ class SudokuBoard extends React.Component {
         this.setState({
           win: true,
           gameStarted: false,
+          deltaCredits: this.state.deltaCredits+this.state.n*1.5
         });
         
       } else {
@@ -306,7 +299,15 @@ class SudokuBoard extends React.Component {
             Current score for winning: {Math.max(this.state.n * 1.5, 0)}
           </Button>
         </div>
-
+        <div>
+          <Button
+            variant="outline-dark"
+            style={{ margin: "2px" }}
+            disabled={true}
+          >
+            Current change in credits: {this.state.deltaCredits}
+          </Button>
+        </div>
         {!this.state.boardIsValid && (
           <div>
             <Button variant="danger" style={{ margin: "2px" }} disabled={true}>
@@ -321,7 +322,18 @@ class SudokuBoard extends React.Component {
               style={{ margin: "2px" }}
               onClick={(e) => this.retrieveEarnings(e)}
             >
-              Win! Click here to retrieve your earnings!
+              Win! Click here to cash out.
+            </Button>
+          </div>
+        )}
+        {!this.state.win && (
+          <div>
+            <Button
+              variant="secondary"
+              style={{ margin: "2px" }}
+              onClick={(e) => this.retrieveEarnings(e)}
+            >
+              Cash out! (Quit Game)
             </Button>
           </div>
         )}
