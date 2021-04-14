@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import MainView from "./agents/Main/MainView";
 import { MasterMindView } from "./agents/MasterMind/MasterMindView";
 import TwoDotsView from "./agents/TwoDots/TwoDotsView";
-import { RussiaRouletteView } from "./agents/RussianRoulette/RussiaRouletteView";
+import { RussianRouletteView } from "./agents/RussianRoulette/RussianRouletteView";
 import SudokuView from "./agents/Sudoku/SudokuView";
 import { SlotsView } from "./agents/Slots/SlotsView";
 import { EarningsView } from "./agents/Main/EarningsView";
@@ -82,7 +82,6 @@ function App() {
 				<Route exact path="/" component={MainView} />
 				<Route exact path="/twodots" component={Wrapper(TwoDotsView)} />
 				<Route exact path="/mastermind" component={Wrapper(MasterMindView)} />
-				<Route exact path="/russianroulette" component={RussiaRouletteView} />
 				<Route exact path="/sudoku" component={Wrapper(SudokuView)} />
 				<Route exact path="/slots" component={Wrapper(SlotsView)} />
 				<Route exact path="/earnings" component={Wrapper(EarningsView)} />
