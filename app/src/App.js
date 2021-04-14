@@ -20,7 +20,7 @@ function App() {
     CreditInterface.addCredits(10, "Home");
     setCredits(CreditInterface.getCredits());
   };
-=======
+
 	// const _credits = useContext(CreditContext);
 
 	const [credits, setCredits] = useState(CreditInterface.getCredits());
@@ -28,7 +28,7 @@ function App() {
 		CreditInterface.addCredits(10, "Home");
 		setCredits(CreditInterface.getCredits());
 	};
->>>>>>> 68e2c86ce3dbe801354524cafb3c19298d3e5b5b
+
 
   let oc2 = () => {
     console.log(CreditInterface.printEarnings());
@@ -38,7 +38,6 @@ function App() {
     console.log(CreditInterface.getCredits());
   };
 
-<<<<<<< HEAD
   function Wrapper(Component) {
     return function () {
       return <Component setCredits={setCredits}></Component>;
@@ -69,7 +68,6 @@ function App() {
       <p>Current Credits: {credits}</p>
     </div>
   );
-=======
 	function Wrapper(Component) {
 		return function () {
 			return <Component setCredits={setCredits}></Component>;
@@ -135,7 +133,6 @@ function App() {
 			</Container>
 		</div>
 	);
->>>>>>> 68e2c86ce3dbe801354524cafb3c19298d3e5b5b
 }
 
 export default App;
