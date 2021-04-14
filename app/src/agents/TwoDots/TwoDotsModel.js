@@ -143,4 +143,4 @@ class TwoDotsModel{
         return x >= 0 && x < this.n && y >= 0 && y < this.n;
     }
 }
-export default TwoDotsModel;
+export default new TwoDotsModel();

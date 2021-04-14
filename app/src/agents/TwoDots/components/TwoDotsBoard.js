@@ -3,9 +3,10 @@ import React from 'react';
 import Point from '../util/Point';
 import Dot from '../util/Dot';
 import BoardMoves from '../util/DotList';
-import { Button } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 import CreditInterface from '../../../CreditInterface';
-
+import { Route, Switch, Link } from "react-router-dom";
+import MainView from '../../Main/MainView'
 class TwoDotsBoard extends React.Component{
 
     constructor(props) {
@@ -19,29 +20,55 @@ class TwoDotsBoard extends React.Component{
         this.getBoardCoordinatesFromCanvasCoordinates = {};
         this.drawnDotsList = new BoardMoves();
         this.canvasRef = React.createRef();
+        this.spanRef = React.createRef();
 
         this.updateBoard = this.updateBoard.bind(this);
         this.handler = this.handler.bind(this);
+
+        this.state = { showModal: false };
+        if(this.props.twoDotsController.moveCount === 0) this.props.twoDotsController.moveCount = 5;
     }
 
+   
+
     updateBoard(){
-        this.props.twoDotsModel.updateBoard(this.path);
+        if(this.path.size() === 0) {
+            alert('No dots selected')
+        }
+        else{
+            this.props.twoDotsModel.updateBoard(this.path);
        
-        // is there a better way to do this?
-        // reset everything and call componen t did mount. use setState?
-        CreditInterface.addCredits(this.path.size(), 'TwoDots');
-        this.props.setCredits(CreditInterface.getCredits())
+            this.props.twoDotsController.moveCount--;
+
+            if(this.props.twoDotsController.moveCount === 0){
+                this.setState({showModal: true})
+            }
+            else{
+                CreditInterface.addCredits(this.path.size(), 'TwoDots');
+                this.reset(false);
+
+    
+                this.props.setCredits(CreditInterface.getCredits());
+                
+                this.componentDidMount();
+            }
+        }
+
+    }
+
+    reset(flag){
         this.wasFirstDotSelected =  false;
         this.lastDotSelected = null;
         this.path = new BoardMoves();
 
         this.getBoardCoordinatesFromCanvasCoordinates = {};
         this.drawnDotsList = new BoardMoves();
-
-        this.componentDidMount();
-
+        
+        if(flag) {
+            this.props.twoDotsController.moveCount = 5;
+            this.componentDidMount();
+        } 
     }
-
     getMouseClickCoordinatesOnBoard(x, y){
         let totalOffsetX = 0;
         let totalOffsetY = 0;
@@ -123,7 +150,7 @@ class TwoDotsBoard extends React.Component{
      */
     drawSegment(startingPoint, endingPoint){
         let context = this.canvasRef.current.getContext("2d");
-        context.lineWidth = 5;
+        context.lineWidth = 10;
         context.strokeStyle = '#ff0000';
         context.lineCap = 'round';
         context.beginPath();
@@ -189,16 +216,15 @@ class TwoDotsBoard extends React.Component{
 
                 // map center of each circle on canvas's coordinaates to board coordinates
 
-                if(!this.getBoardCoordinatesFromCanvasCoordinates[x]) this.getBoardCoordinatesFromCanvasCoordinates[x] = {};
-                this.getBoardCoordinatesFromCanvasCoordinates[x][y] = pointOnTwoDotsBoard;
-
-    
                 /**
                  * x : {
                  *  y: new Point()
                  * }
                  * 
                  */
+                if(!this.getBoardCoordinatesFromCanvasCoordinates[x]) this.getBoardCoordinatesFromCanvasCoordinates[x] = {};
+                this.getBoardCoordinatesFromCanvasCoordinates[x][y] = pointOnTwoDotsBoard;
+
 				this.drawDot(dotToDraw, color);
 				
 			}
@@ -207,9 +233,43 @@ class TwoDotsBoard extends React.Component{
     }
 
     render(){
+        let modal;
+        if(this.state.showModal){
+            modal =  (
+                <Modal.Dialog a>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Game Over! You ran out of moves</Modal.Title>
+                    </Modal.Header>
+
+                    <Modal.Body>
+                        <p>{CreditInterface.getCredits()}</p>
+                    </Modal.Body>
+
+                    <Modal.Footer>
+                        <Button  variant="secondary" onClick={() => {
+                            this.reset(true);
+                            this.setState({ showModal: false })
+                        }}>Play Again</Button>
+                       
+
+                        <Link to="/">
+                            <Button variant="primary">Exit To Main</Button>    
+                        </Link>
+
+                        <Switch>
+                            <Route exact path="/" component={MainView} />
+			            </Switch>
+
+                    </Modal.Footer>
+                </Modal.Dialog>
+            )
+        }
+        else modal = '';
+
         return (
             
             <div>
+                {modal}
 				<canvas id="dots" ref={this.canvasRef} style={{
 					top: 0,
 					left: 0,
@@ -218,7 +278,10 @@ class TwoDotsBoard extends React.Component{
                     border: '1px solid black'
 				}}/>
                 <div></div>
+                <p style={{marginLeft: '0', fontSize: '24px'}} ref={this.spanRef}>Moves Left: {this.props.twoDotsController.moveCount}</p>
                 <Button variant="danger" onClick = {this.updateBoard}>Eliminate selected dots</Button>
+                {/* {this.state.errorBar} */}
+                <div></div>
 			</div>
         )
     }

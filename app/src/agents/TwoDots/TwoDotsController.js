@@ -8,11 +8,12 @@ class TwoDotsController extends Bootstrap {
 
     // implement the two dots stuff
 
-    constructor(){
-        this.model = new TwoDotsModel();
-        this.view = new TwoDotsView();
+    constructor(props){
+        // this.model = new TwoDotsModel();
+        // this.view = new TwoDotsView();
+        super(props);
         this.points = 0;
-        this.moveCount = 30;
+        this.moveCount = 5;
     }
 
     setView(){
@@ -61,5 +62,5 @@ class TwoDotsController extends Bootstrap {
     }
 }
 
-export default TwoDotsController;
+export default new TwoDotsController();
 
