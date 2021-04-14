@@ -16,6 +16,10 @@ class CardView extends Component {
 				);
 			}
 		};
+
+		let resetCreds = () => {
+			CreditInterface.resetCredits();
+		};
 		return (
 			<Container>
 				<CardColumns>
@@ -144,7 +148,9 @@ class CardView extends Component {
 								Gone broke and want a chance at redemption? Reset your credits,
 								free of charge!
 								<div style={{ marginTop: "5%" }}>
-									<Button variant="primary">Reset Credits</Button>
+									<Button onClick={resetCreds} variant="primary">
+										Reset Credits
+									</Button>
 								</div>
 							</Card.Text>
 						</Card.Body>

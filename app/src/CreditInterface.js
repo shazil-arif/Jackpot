@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 class CreditInterface {
 	constructor() {
-		this.credits = localStorage.getItem("credits") || 100;
+		this.credits = parseInt(localStorage.getItem("credits")) || 100;
 		this.history = [];
 	}
 
@@ -56,7 +56,8 @@ class CreditInterface {
 	}
 
 	resetCredits() {
-		this.credits = 0;
+		this.credits = 100;
+		this.history = [];
 	}
 }
 
