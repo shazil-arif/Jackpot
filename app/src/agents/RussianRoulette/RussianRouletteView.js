@@ -106,14 +106,22 @@ export class RussianRouletteView extends Component {
 	{
 		if(this.state.gameStage==="fail")
 		{
-			alert(" quit with zero multiplier,score goes to zero as the coconut is dead\nTODO: imp score chagne and reset()  ")
-			this.props.setCredits(0)
+			// this.state.gameMSG="quit with zero multiplier,score goes to zero as the coconut is dead"
+			CreditInterface.addCredits(-CreditInterface.getCredits(), "RussianRoulette");
+    		this.props.setCredits(CreditInterface.getCredits());
+			this.setState({ statef: this.statef });
+
 		}
 		else
 		{
-			alert(" quit with score multiplier = " + this.state.multiplierGained+"\nTODO: imp score chagne and reset()")
-			this.props.setCredits(CreditInterface.getCredits()*this.state.multiplierGained)
+			// this.state.gameMSG=" quit with score multiplier = " + this.state.multiplierGained
+			CreditInterface.addCredits(-CreditInterface.getCredits()+CreditInterface.getCredits()*this.state.multiplierGained, "RussianRoulette");
+ 
+			this.props.setCredits(CreditInterface.getCredits())
+			this.setState({ statef: this.statef });
+
 		}
+
 }
 
 	render() {
