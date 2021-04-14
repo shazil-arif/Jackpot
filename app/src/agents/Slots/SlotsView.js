@@ -12,7 +12,6 @@ export const SlotsView = (props) => {
 	const [isRunning, setIsRunning] = useState(false);
 	const [winner, setWinner] = useState("Play a round to get your results!");
 	const [credits, setCredits] = useState(0);
-	props.setCredits(CreditInterface.getCredits());
 	const handleStart = () => {
 		const credits = CreditInterface.getCredits();
 		if (credits >= 10) {
@@ -34,26 +33,27 @@ export const SlotsView = (props) => {
 		// Lose
 		if (result.length == 3) {
 			CreditInterface.removeCredits(10, "Slots");
-			setWinner("Sorry, you lost!");
 		}
 		// Win Lot
 		else if (result.length == 1) {
 			if (result[0].split(".")[0] == "banana") {
 				CreditInterface.addCredits(MAX_PRIZE * 2, "Slots");
-				setWinner("You won the largest prize! Congrats!");
+				// setWinner("You won the largest prize! Congrats!");
 			} else {
 				CreditInterface.addCredits(MAX_PRIZE, "Slots");
-				setWinner("You won a large prize!");
+				// setWinner("You won a large prize!");
 			}
 		}
 		// Win Little (2)
 		else if (images[0] == images[1] || images[1] == images[2]) {
 			CreditInterface.addCredits(20, "Slots");
-			setWinner("You won a small prize!");
+			// setWinner("You won a small prize!");
 		} else {
 			CreditInterface.addCredits(10, "Slots");
-			setWinner("You won a tiny prize. Not bad.");
+			// setWinner("You won a tiny prize. Not bad.");
 		}
+		console.log(images);
+
 		props.setCredits(CreditInterface.getCredits());
 	};
 	return (

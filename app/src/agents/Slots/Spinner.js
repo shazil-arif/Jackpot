@@ -47,11 +47,10 @@ class Spinner extends React.Component {
 			wheels: [this.randomImage(), this.randomImage(), this.randomImage()],
 		});
 
-	tick = () => (this.isSpinning = setInterval(this.spin, 100));
+	tick = () => (this.isSpinning = setInterval(this.spin, 200));
 
 	render() {
 		const { wheels } = this.state;
-
 		return (
 			<React.Fragment>
 				{wheels.map((wheel, id) => (
