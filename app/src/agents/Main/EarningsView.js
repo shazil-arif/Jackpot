@@ -20,7 +20,6 @@ export const EarningsView = () => {
 						return <Alert variant="primary">{item}</Alert>;
 					})
 				)}
-				<div style={{ height: 50 }}></div>
 			</Container>
 		</div>
 	);

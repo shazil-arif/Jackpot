@@ -15,7 +15,7 @@ class CreditInterface {
 
 	removeCredits(credits, game) {
 		this.credits -= credits;
-		this.history.push({ credits: credits, game: game });
+		this.history.push({ credits: credits * -1, game: game });
 	}
 
 	cashOut() {}
@@ -26,7 +26,9 @@ class CreditInterface {
 			let credits = item.credits;
 			let game = item.game;
 			report.push(
-				`You ${credits >= 0 ? "won" : "lost"} ${credits} in ${game}.`
+				`You ${credits >= 0 ? "won" : "lost"} ${Math.abs(
+					credits
+				)} credits in ${game}.`
 			);
 		});
 		return report;
