@@ -85,6 +85,7 @@ function App() {
 				<Route exact path="/sudoku" component={Wrapper(SudokuView)} />
 				<Route exact path="/slots" component={Wrapper(SlotsView)} />
 				<Route exact path="/earnings" component={Wrapper(EarningsView)} />
+				<Route exact path="/russianroulette" component={Wrapper(RussianRouletteView)} />
 			</Switch>
 			<Container>
 				<Navbar bg="dark" fixed="bottom">
